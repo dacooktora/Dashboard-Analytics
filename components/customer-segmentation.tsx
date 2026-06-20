@@ -29,13 +29,20 @@ const COLORS = {
 const RenderZoomedDots = ({
   segments,
   data,
-  xAxis,
-  yAxis,
+  xAxisMap,
+  yAxisMap,
   scale,
   offsetX,
   offsetY,
 }: any) => {
-  if (!xAxis || !yAxis || !data || !xAxis.scale || !yAxis.scale) return null
+  // Recharts <Customized> tidak mengirim prop "xAxis"/"yAxis" secara langsung,
+  // melainkan "xAxisMap"/"yAxisMap" (object, keyed by axis id).
+  // Ambil axis pertama dari map tersebut agar .scale() bisa dipakai.
+  const xAxis = xAxisMap && Object.values(xAxisMap)[0]
+  const yAxis = yAxisMap && Object.values(yAxisMap)[0]
+
+  if (!xAxis || !yAxis || !data || !(xAxis as any).scale || !(yAxis as any).scale)
+    return null
 
   return (
     <g>
@@ -47,12 +54,12 @@ const RenderZoomedDots = ({
         const avgX = points.reduce((sum: number, p: any) => sum + p.x, 0) / points.length
         const avgY = points.reduce((sum: number, p: any) => sum + p.y, 0) / points.length
 
-        const cx = xAxis.scale(avgX)
-        const cy = yAxis.scale(avgY)
+        const cx = (xAxis as any).scale(avgX)
+        const cy = (yAxis as any).scale(avgY)
 
         const pixelDistances = points.map((p: any) => {
-          const px = xAxis.scale(p.x)
-          const py = yAxis.scale(p.y)
+          const px = (xAxis as any).scale(p.x)
+          const py = (yAxis as any).scale(p.y)
           return Math.sqrt(Math.pow(px - cx, 2) + Math.pow(py - cy, 2))
         })
 
@@ -81,8 +88,8 @@ const RenderZoomedDots = ({
 
       {/* Data points with zoom */}
       {data.map((point: any, idx: number) => {
-        const cx = xAxis.scale(point.x)
-        const cy = yAxis.scale(point.y)
+        const cx = (xAxis as any).scale(point.x)
+        const cy = (yAxis as any).scale(point.y)
         const color = COLORS[point.segment as keyof typeof COLORS] || "#888"
 
         // Apply zoom transform only to dot positions
