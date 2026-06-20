@@ -72,7 +72,7 @@ const RenderZoomedDots = ({
               key={`dot-${idx}`}
               cx={zoomedCx}
               cy={zoomedCy}
-              r={6 * scale}
+              r={6 / scale}
               fill={color}
               fillOpacity={0.9}
               stroke="#fff"
@@ -125,7 +125,6 @@ export function CustomerSegmentation() {
     const center = 50 - offsetX / scale
     const min = Math.max(0, center - range / 2)
     const max = Math.min(100, center + range / 2)
-    // Bulatkan ke kelipatan 0.1
     const roundedMin = Math.floor(min * 10) / 10
     const roundedMax = Math.ceil(max * 10) / 10
     return [roundedMin, roundedMax]
@@ -137,13 +136,11 @@ export function CustomerSegmentation() {
     const center = maxY / 2 - offsetY / scale
     const min = Math.max(0, center - range / 2)
     const max = Math.min(maxY, center + range / 2)
-    // Bulatkan ke kelipatan 10.000
     const roundedMin = Math.floor(min / 10000) * 10000
     const roundedMax = Math.ceil(max / 10000) * 10000
     return [roundedMin, roundedMax]
   }
 
-  // Fungsi buat generate ticks dengan selisih 0.1 untuk X dan 10.000 untuk Y
   const getXTicks = () => {
     const [min, max] = getXDomain()
     const ticks = []
@@ -152,9 +149,8 @@ export function CustomerSegmentation() {
       ticks.push(Math.round(current * 10) / 10)
       current += 0.1
     }
-    // Batasi maksimal 15 ticks biar gak terlalu penuh
-    if (ticks.length > 15) {
-      const step = Math.ceil(ticks.length / 10)
+    if (ticks.length > 20) {
+      const step = Math.ceil(ticks.length / 15)
       return ticks.filter((_, i) => i % step === 0)
     }
     return ticks
@@ -357,9 +353,10 @@ export function CustomerSegmentation() {
                   dataKey="x"
                   name="Frekuensi"
                   stroke="hsl(var(--muted-foreground))"
-                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12, fontWeight: 500 }}
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10, fontWeight: 500 }}
                   domain={xDomain}
                   ticks={xTicks}
+                  tickCount={Math.min(xTicks.length, 20)}
                   label={{
                     value: "Frekuensi Score (%)",
                     position: "bottom",
@@ -381,6 +378,7 @@ export function CustomerSegmentation() {
                   width={55}
                   domain={yDomain}
                   ticks={yTicks}
+                  tickCount={Math.min(yTicks.length, 10)}
                 />
 
                 <Customized
