@@ -26,6 +26,27 @@ const COLORS = {
   Potential: "#eab308",
 }
 
+// Custom tooltip yang lebih jelas
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload
+    return (
+      <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
+        <p className="text-sm font-semibold text-gray-800">
+          {data.segment}
+        </p>
+        <p className="text-xs text-gray-600">
+          Frekuensi: {data.x.toFixed(1)}
+        </p>
+        <p className="text-xs text-gray-600 font-medium">
+          Nilai Transaksi: Rp {data.y.toLocaleString("id-ID")}
+        </p>
+      </div>
+    )
+  }
+  return null
+}
+
 const RenderZoomedDots = ({
   segments,
   data,
@@ -34,6 +55,7 @@ const RenderZoomedDots = ({
   scale,
   offsetX,
   offsetY,
+  onDotClick,
 }: any) => {
   const xAxis = xAxisMap && Object.values(xAxisMap)[0]
   const yAxis = yAxisMap && Object.values(yAxisMap)[0]
@@ -50,8 +72,8 @@ const RenderZoomedDots = ({
   const yMin = Math.min(...yRange)
   const yMax = Math.max(...yRange)
 
-  // Ukuran titik: mengecil pas zoom tapi minimal 3px biar keliatan
-  const dotSize = Math.max(3, 6 / Math.sqrt(scale))
+  // Ukuran titik: minimal 4px, maksimal 12px, mengecil pelan pas zoom
+  const dotSize = Math.min(12, Math.max(4, 8 / Math.sqrt(scale)))
 
   return (
     <g>
@@ -77,10 +99,11 @@ const RenderZoomedDots = ({
               cy={zoomedCy}
               r={dotSize}
               fill={color}
-              fillOpacity={0.9}
+              fillOpacity={0.85}
               stroke="#fff"
               strokeWidth={1.5}
               style={{ cursor: "pointer" }}
+              onClick={() => onDotClick && onDotClick(point)}
             />
           )
         })}
@@ -96,6 +119,7 @@ export function CustomerSegmentation() {
   const [scale, setScale] = useState(1)
   const [offsetX, setOffsetX] = useState(0)
   const [offsetY, setOffsetY] = useState(0)
+  const [selectedDot, setSelectedDot] = useState<any>(null)
   const lastPinchDist = useRef<number | null>(null)
   const chartAreaRef = useRef<HTMLDivElement>(null)
   const transformRef = useRef({ scale: 1, offsetX: 0, offsetY: 0 })
@@ -237,6 +261,10 @@ export function CustomerSegmentation() {
   const handleTouchEnd = useCallback(() => {
     lastPinchDist.current = null
   }, [])
+
+  const handleDotClick = (point: any) => {
+    setSelectedDot(point)
+  }
 
   if (!data) {
     return (
@@ -393,34 +421,21 @@ export function CustomerSegmentation() {
                       scale={scale}
                       offsetX={offsetX}
                       offsetY={offsetY}
+                      onDotClick={handleDotClick}
                     />
                   )}
                 />
 
-                <Tooltip
-                  cursor={{ strokeDasharray: "3 3" }}
-                  contentStyle={{
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #e5e7eb",
-                    borderRadius: "12px",
-                    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-                    padding: "12px",
-                  }}
-                  formatter={(value: any, name: string) => {
-                    if (name === "Nilai Transaksi")
-                      return [`Rp ${value.toLocaleString("id-ID")}`, name]
-                    return [value, name]
-                  }}
-                />
+                <Tooltip content={<CustomTooltip />} />
 
-                {/* Scatter dengan opacity 0.1 biar tooltip tetap bisa nangkep */}
+                {/* Scatter buat tooltip alternative */}
                 {segmentList.map((segmentName) => (
                   <Scatter
                     key={segmentName}
                     name={segmentName}
                     data={data.clusterData.filter((d) => d.segment === segmentName)}
                     fill="transparent"
-                    opacity={0.1}
+                    opacity={0}
                   >
                     {data.clusterData
                       .filter((d) => d.segment === segmentName)
@@ -428,7 +443,7 @@ export function CustomerSegmentation() {
                         <Cell
                           key={`cell-${segmentName}-${index}`}
                           fill="transparent"
-                          r={6}
+                          r={10}
                         />
                       ))}
                   </Scatter>
