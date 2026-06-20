@@ -15,8 +15,9 @@ import {
   Cell,
   Customized,
 } from "recharts"
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
+import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const COLORS = {
   "High Value": "#ef4444",
@@ -25,11 +26,20 @@ const COLORS = {
   Potential: "#eab308",
 }
 
-const RenderClusterEnclosures = ({ segments, data, xAxis, yAxis }: any) => {
+const RenderZoomedDots = ({
+  segments,
+  data,
+  xAxis,
+  yAxis,
+  scale,
+  offsetX,
+  offsetY,
+}: any) => {
   if (!xAxis || !yAxis || !data || !xAxis.scale || !yAxis.scale) return null
 
   return (
     <g>
+      {/* Cluster enclosures */}
       {segments.map((segmentName: string) => {
         const points = data.filter((d: any) => d.segment === segmentName)
         if (points.length < 1) return null
@@ -50,17 +60,45 @@ const RenderClusterEnclosures = ({ segments, data, xAxis, yAxis }: any) => {
         const radius = (maxDist || 30) + 30
         const color = COLORS[segmentName as keyof typeof COLORS]
 
+        // Apply zoom transform to enclosure
+        const zoomedCx = offsetX + cx * scale
+        const zoomedCy = offsetY + cy * scale
+
         return (
           <circle
             key={`enclosure-${segmentName}`}
-            cx={cx}
-            cy={cy}
-            r={radius}
+            cx={zoomedCx}
+            cy={zoomedCy}
+            r={radius * scale}
             fill={color}
             fillOpacity={0.05}
             stroke={color}
             strokeWidth={2}
             strokeDasharray="10 5"
+          />
+        )
+      })}
+
+      {/* Data points with zoom */}
+      {data.map((point: any, idx: number) => {
+        const cx = xAxis.scale(point.x)
+        const cy = yAxis.scale(point.y)
+        const color = COLORS[point.segment as keyof typeof COLORS] || "#888"
+
+        // Apply zoom transform only to dot positions
+        const zoomedCx = offsetX + cx * scale
+        const zoomedCy = offsetY + cy * scale
+
+        return (
+          <circle
+            key={`dot-${idx}`}
+            cx={zoomedCx}
+            cy={zoomedCy}
+            r={6}
+            fill={color}
+            fillOpacity={0.9}
+            stroke="#fff"
+            strokeWidth={2}
           />
         )
       })}
@@ -72,6 +110,11 @@ export function CustomerSegmentation() {
   const { data } = useDataStore()
   const [isClient, setIsClient] = useState(false)
   const [containerHeight, setContainerHeight] = useState(400)
+  const [scale, setScale] = useState(1)
+  const [offsetX, setOffsetX] = useState(0)
+  const [offsetY, setOffsetY] = useState(0)
+  const lastPinchDist = useRef<number | null>(null)
+  const chartAreaRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsClient(true)
@@ -84,6 +127,43 @@ export function CustomerSegmentation() {
     updateHeight()
     window.addEventListener("resize", updateHeight)
     return () => window.removeEventListener("resize", updateHeight)
+  }, [])
+
+  const handleZoomIn = () => {
+    setScale((s) => Math.min(s + 0.3, 5))
+  }
+
+  const handleZoomOut = () => {
+    setScale((s) => Math.max(s - 0.3, 0.5))
+  }
+
+  const handleReset = () => {
+    setScale(1)
+    setOffsetX(0)
+    setOffsetY(0)
+  }
+
+  // Pinch to zoom handler
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      e.preventDefault()
+      const touch1 = e.touches[0]
+      const touch2 = e.touches[1]
+      const dist = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) +
+          Math.pow(touch2.clientY - touch1.clientY, 2)
+      )
+
+      if (lastPinchDist.current !== null) {
+        const delta = dist - lastPinchDist.current
+        setScale((s) => Math.min(Math.max(s + delta * 0.01, 0.5), 5))
+      }
+      lastPinchDist.current = dist
+    }
+  }, [])
+
+  const handleTouchEnd = useCallback(() => {
+    lastPinchDist.current = null
   }, [])
 
   if (!data) {
@@ -112,12 +192,9 @@ export function CustomerSegmentation() {
         <p className="text-sm text-muted-foreground mt-1">
           Visualisasi pengelompokan pelanggan berdasarkan Frekuensi vs Nilai Transaksi
         </p>
-        <p className="text-xs text-muted-foreground mt-0.5">
-          💡 Scroll / pinch untuk zoom in/out
-        </p>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-4">
         {data.segments.map((segment) => (
           <Badge
             key={segment.name}
@@ -143,130 +220,143 @@ export function CustomerSegmentation() {
           <p>Memuat chart...</p>
         </div>
       ) : (
-        <TransformWrapper
-          initialScale={1}
-          minScale={0.5}
-          maxScale={5}
-          centerOnInit={true}
-          limitToBounds={true}
-          smooth={true}
-          wheel={{ step: 0.05 }}
-          pinch={{ step: 0.05 }}
-        >
-          {({ setTransform }) => (
-            <>
-              <div className="flex justify-end mb-1">
-                <button
-                  onClick={() => setTransform(0, 0, 1)}
-                  className="text-xs text-muted-foreground hover:text-primary underline"
-                >
-                  Reset Zoom
-                </button>
-              </div>
-              <TransformComponent
-                wrapperStyle={{
-                  width: "100%",
-                  height: containerHeight,
-                  overflow: "hidden",
-                  touchAction: "none",
-                }}
-                contentStyle={{
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <div style={{ width: "100%", height: containerHeight }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <ScatterChart margin={{ top: 20, right: 10, bottom: 50, left: 10 }}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                      <XAxis
-                        type="number"
-                        dataKey="x"
-                        name="Frekuensi"
-                        stroke="hsl(var(--muted-foreground))"
-                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                        domain={[0, 100]}
-                        label={{
-                          value: "Frekuensi Score (%)",
-                          position: "bottom",
-                          offset: 30,
-                          fill: "hsl(var(--muted-foreground))",
-                          fontSize: 11,
-                        }}
-                      />
-                      <YAxis
-                        type="number"
-                        dataKey="y"
-                        name="Nilai Transaksi"
-                        stroke="hsl(var(--muted-foreground))"
-                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
-                        tickFormatter={(val) => `Rp ${Math.round(val).toLocaleString("id-ID")}`}
-                        width={90}
-                      />
+        <>
+          {/* Zoom Controls */}
+          <div className="flex items-center justify-end gap-2 mb-2">
+            <span className="text-xs text-muted-foreground">
+              {Math.round(scale * 100)}%
+            </span>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-7 w-7"
+              onClick={handleZoomOut}
+              disabled={scale <= 0.5}
+            >
+              <ZoomOut className="h-3 w-3" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-7 w-7"
+              onClick={handleZoomIn}
+              disabled={scale >= 5}
+            >
+              <ZoomIn className="h-3 w-3" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-7 w-7"
+              onClick={handleReset}
+            >
+              <RotateCcw className="h-3 w-3" />
+            </Button>
+          </div>
 
-                      <Customized
-                        component={(props: any) => (
-                          <RenderClusterEnclosures
-                            {...props}
-                            segments={segmentList}
-                            data={data.clusterData}
-                          />
-                        )}
-                      />
+          {/* Chart */}
+          <div
+            ref={chartAreaRef}
+            style={{ width: "100%", height: containerHeight }}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart margin={{ top: 20, right: 10, bottom: 50, left: 10 }}>
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke="hsl(var(--border))"
+                />
+                <XAxis
+                  type="number"
+                  dataKey="x"
+                  name="Frekuensi"
+                  stroke="hsl(var(--muted-foreground))"
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                  domain={[0, 100]}
+                  label={{
+                    value: "Frekuensi Score (%)",
+                    position: "bottom",
+                    offset: 30,
+                    fill: "hsl(var(--muted-foreground))",
+                    fontSize: 11,
+                  }}
+                />
+                <YAxis
+                  type="number"
+                  dataKey="y"
+                  name="Nilai Transaksi"
+                  stroke="hsl(var(--muted-foreground))"
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                  tickFormatter={(val) =>
+                    `Rp ${Math.round(val).toLocaleString("id-ID")}`
+                  }
+                  width={90}
+                />
 
-                      <Tooltip
-                        cursor={{ strokeDasharray: "3 3" }}
-                        contentStyle={{
-                          backgroundColor: "#ffffff",
-                          border: "1px solid #e5e7eb",
-                          borderRadius: "12px",
-                          boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-                          padding: "12px",
-                        }}
-                        formatter={(value: any, name: string) => {
-                          if (name === "Nilai Transaksi")
-                            return [`Rp ${value.toLocaleString("id-ID")}`, name]
-                          return [value, name]
-                        }}
-                      />
-                      <Legend
-                        verticalAlign="top"
-                        align="center"
-                        height={36}
-                        iconType="circle"
-                        iconSize={8}
-                        wrapperStyle={{ fontSize: "11px" }}
-                      />
+                {/* Render zoomed dots via Customized */}
+                <Customized
+                  component={(props: any) => (
+                    <RenderZoomedDots
+                      {...props}
+                      segments={segmentList}
+                      data={data.clusterData}
+                      scale={scale}
+                      offsetX={offsetX}
+                      offsetY={offsetY}
+                    />
+                  )}
+                />
 
-                      {segmentList.map((segmentName) => (
-                        <Scatter
-                          key={segmentName}
-                          name={segmentName}
-                          data={data.clusterData.filter((d) => d.segment === segmentName)}
-                          fill={COLORS[segmentName as keyof typeof COLORS]}
-                          animationDuration={1500}
-                        >
-                          {data.clusterData
-                            .filter((d) => d.segment === segmentName)
-                            .map((entry, index) => (
-                              <Cell
-                                key={`cell-${segmentName}-${index}`}
-                                fill={COLORS[segmentName as keyof typeof COLORS]}
-                                fillOpacity={0.9}
-                                stroke="#fff"
-                                strokeWidth={2}
-                                r={6}
-                              />
-                            ))}
-                        </Scatter>
+                <Tooltip
+                  cursor={{ strokeDasharray: "3 3" }}
+                  contentStyle={{
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "12px",
+                    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+                    padding: "12px",
+                  }}
+                  formatter={(value: any, name: string) => {
+                    if (name === "Nilai Transaksi")
+                      return [`Rp ${value.toLocaleString("id-ID")}`, name]
+                    return [value, name]
+                  }}
+                />
+                <Legend
+                  verticalAlign="top"
+                  align="center"
+                  height={36}
+                  iconType="circle"
+                  iconSize={8}
+                  wrapperStyle={{ fontSize: "11px" }}
+                />
+
+                {/* Invisible scatter untuk tooltip tetap jalan */}
+                {segmentList.map((segmentName) => (
+                  <Scatter
+                    key={segmentName}
+                    name={segmentName}
+                    data={data.clusterData.filter((d) => d.segment === segmentName)}
+                    fill="transparent"
+                    opacity={0}
+                  >
+                    {data.clusterData
+                      .filter((d) => d.segment === segmentName)
+                      .map((entry, index) => (
+                        <Cell
+                          key={`cell-${segmentName}-${index}`}
+                          fill="transparent"
+                          r={6}
+                        />
                       ))}
-                    </ScatterChart>
-                  </ResponsiveContainer>
-                </div>
-              </TransformComponent>
-            </>
-          )}
-        </TransformWrapper>
+                  </Scatter>
+                ))}
+              </ScatterChart>
+            </ResponsiveContainer>
+          </div>
+        </>
       )}
     </Card>
   )
