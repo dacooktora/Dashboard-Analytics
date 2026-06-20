@@ -127,11 +127,11 @@ export function AdvancedAnalytics() {
               />
               <Tooltip
                 contentStyle={{
-  backgroundColor: "#ffffff",
-  border: "1px solid #e5e7eb",
-  borderRadius: "12px",
-  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-}}
+                  backgroundColor: "#ffffff",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "12px",
+                  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+                }}
               />
             </RadarChart>
           </ResponsiveContainer>
@@ -165,11 +165,11 @@ export function AdvancedAnalytics() {
               />
               <Tooltip
                 contentStyle={{
-  backgroundColor: "#ffffff",
-  border: "1px solid #e5e7eb",
-  borderRadius: "12px",
-  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-}}
+                  backgroundColor: "#ffffff",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "12px",
+                  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+                }}
               />
               <Bar dataKey="count" animationDuration={2000} barSize={40}>
                 {data.clvData.map((entry, index) => (
@@ -192,91 +192,91 @@ export function AdvancedAnalytics() {
           </div>
         </Card>
 
-       {/* Cohort Retention Analysis */}
-<Card className="p-6 border-none shadow-md bg-card/50 backdrop-blur">
-  <div className="mb-4">
-    <h3 className="font-semibold text-lg">Retention & Revenue Trend</h3>
-    <p className="text-xs text-muted-foreground mt-1">Analisis kohort dan pertumbuhan pendapatan bulanan</p>
-  </div>
-  <div className="overflow-x-auto">
-    <div className="min-w-[400px]">
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart 
-          data={data.cohortData} 
-          margin={{ 
-            top: 10, 
-            right: 10, 
-            left: -10, 
-            bottom: 0 
-          }}
-        >
-          <defs>
-            <linearGradient id="colorRetention" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="hsl(var(--chart-2))" stopOpacity={1} />
-              <stop offset="95%" stopColor="hsl(var(--chart-2))" stopOpacity={0.2} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-          <XAxis
-            dataKey="month"
-            axisLine={false}
-            tickLine={false}
-            stroke="hsl(var(--muted-foreground))"
-            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-          />
-          <YAxis
-            yAxisId="left"
-            axisLine={false}
-            tickLine={false}
-            stroke="hsl(var(--muted-foreground))"
-            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-          />
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            axisLine={false}
-            tickLine={false}
-            stroke="hsl(var(--muted-foreground))"
-            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
-            tickFormatter={(val) => formatCurrency(val)}
-            width={80}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "#ffffff",
-              border: "1px solid #e5e7eb",
-              borderRadius: "12px",
-              boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-            }}
-          />
-          <Legend verticalAlign="top" height={36} />
-          <Line
-            yAxisId="left"
-            type="monotone"
-            dataKey="retention"
-            stroke="hsl(var(--chart-2))"
-            strokeWidth={3}
-            dot={{ r: 4, fill: "hsl(var(--chart-2))", strokeWidth: 2, stroke: "#fff" }}
-            activeDot={{ r: 6, strokeWidth: 0 }}
-            name="Retention %"
-            animationDuration={2500}
-          />
-          <Line
-            yAxisId="right"
-            type="monotone"
-            dataKey="revenue"
-            stroke="hsl(var(--chart-1))"
-            strokeWidth={3}
-            dot={{ r: 4, fill: "hsl(var(--chart-1))", strokeWidth: 2, stroke: "#fff" }}
-            activeDot={{ r: 6, strokeWidth: 0 }}
-            name="Revenue"
-            animationDuration={2500}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  </div>
-</Card>
+        {/* Cohort Retention Analysis — FIXED */}
+        <Card className="p-6 border-none shadow-md bg-card/50 backdrop-blur">
+          <div className="mb-4">
+            <h3 className="font-semibold text-lg">Retention & Revenue Trend</h3>
+            <p className="text-xs text-muted-foreground mt-1">Analisis kohort dan pertumbuhan pendapatan bulanan</p>
+          </div>
+          <div className="overflow-x-auto">
+            <div className="min-w-[280px]">
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart 
+                  data={data.cohortData} 
+                  margin={{ 
+                    top: 10, 
+                    right: 5, 
+                    left: -5, 
+                    bottom: 0 
+                  }}
+                >
+                  <defs>
+                    <linearGradient id="colorRetention" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--chart-2))" stopOpacity={1} />
+                      <stop offset="95%" stopColor="hsl(var(--chart-2))" stopOpacity={0.2} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                  <XAxis
+                    dataKey="month"
+                    axisLine={false}
+                    tickLine={false}
+                    stroke="hsl(var(--muted-foreground))"
+                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                  />
+                  <YAxis
+                    yAxisId="left"
+                    axisLine={false}
+                    tickLine={false}
+                    stroke="hsl(var(--muted-foreground))"
+                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                  />
+                  <YAxis
+                    yAxisId="right"
+                    orientation="right"
+                    axisLine={false}
+                    tickLine={false}
+                    stroke="hsl(var(--muted-foreground))"
+                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                    tickFormatter={(val) => formatCurrency(val)}
+                    width={80}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#ffffff",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+                    }}
+                  />
+                  <Legend verticalAlign="top" height={36} />
+                  <Line
+                    yAxisId="left"
+                    type="monotone"
+                    dataKey="retention"
+                    stroke="hsl(var(--chart-2))"
+                    strokeWidth={3}
+                    dot={{ r: 4, fill: "hsl(var(--chart-2))", strokeWidth: 2, stroke: "#fff" }}
+                    activeDot={{ r: 6, strokeWidth: 0 }}
+                    name="Retention %"
+                    animationDuration={2500}
+                  />
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="revenue"
+                    stroke="hsl(var(--chart-1))"
+                    strokeWidth={3}
+                    dot={{ r: 4, fill: "hsl(var(--chart-1))", strokeWidth: 2, stroke: "#fff" }}
+                    activeDot={{ r: 6, strokeWidth: 0 }}
+                    name="Revenue"
+                    animationDuration={2500}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </Card>
 
         {/* Product Category Performance */}
         <Card className="p-6 border-none shadow-md bg-card/50 backdrop-blur lg:col-span-2">
@@ -315,11 +315,11 @@ export function AdvancedAnalytics() {
                   </Pie>
                   <Tooltip
                     contentStyle={{
-  backgroundColor: "#ffffff",
-  border: "1px solid #e5e7eb",
-  borderRadius: "12px",
-  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-}}
+                      backgroundColor: "#ffffff",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+                    }}
                     formatter={(value: any, name: any, props: any) => [
                       `${formatCurrency(props.payload.revenue)} (${value}%)`,
                       name,
