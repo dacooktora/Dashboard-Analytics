@@ -97,7 +97,7 @@ export function CustomerSegmentation() {
   const transformRef = useRef({ scale: 1, offsetX: 0, offsetY: 0 })
 
   const MIN_SCALE = 0.5
-  const MAX_SCALE = 5
+  const MAX_SCALE = 20
 
   const applyZoom = useCallback((rawScale: number, anchorX: number, anchorY: number) => {
     const newScale = Math.min(Math.max(rawScale, MIN_SCALE), MAX_SCALE)
@@ -119,18 +119,60 @@ export function CustomerSegmentation() {
     return rect ? { x: rect.width / 2, y: rect.height / 2 } : { x: 0, y: 0 }
   }
 
-  // Hitung domain dinamis untuk sumbu X dan Y berdasarkan zoom
+  // Domain dinamis dengan selisih 0.1 untuk X dan 10.000 untuk Y
   const getXDomain = () => {
     const range = 100 / scale
     const center = 50 - offsetX / scale
-    return [Math.max(0, center - range / 2), Math.min(100, center + range / 2)]
+    const min = Math.max(0, center - range / 2)
+    const max = Math.min(100, center + range / 2)
+    // Bulatkan ke kelipatan 0.1
+    const roundedMin = Math.floor(min * 10) / 10
+    const roundedMax = Math.ceil(max * 10) / 10
+    return [roundedMin, roundedMax]
   }
 
   const getYDomain = () => {
     const maxY = data?.clusterData?.reduce((max, d) => Math.max(max, d.y), 0) || 10000000
     const range = maxY / scale
     const center = maxY / 2 - offsetY / scale
-    return [Math.max(0, center - range / 2), Math.min(maxY, center + range / 2)]
+    const min = Math.max(0, center - range / 2)
+    const max = Math.min(maxY, center + range / 2)
+    // Bulatkan ke kelipatan 10.000
+    const roundedMin = Math.floor(min / 10000) * 10000
+    const roundedMax = Math.ceil(max / 10000) * 10000
+    return [roundedMin, roundedMax]
+  }
+
+  // Fungsi buat generate ticks dengan selisih 0.1 untuk X dan 10.000 untuk Y
+  const getXTicks = () => {
+    const [min, max] = getXDomain()
+    const ticks = []
+    let current = Math.ceil(min * 10) / 10
+    while (current <= max) {
+      ticks.push(Math.round(current * 10) / 10)
+      current += 0.1
+    }
+    // Batasi maksimal 15 ticks biar gak terlalu penuh
+    if (ticks.length > 15) {
+      const step = Math.ceil(ticks.length / 10)
+      return ticks.filter((_, i) => i % step === 0)
+    }
+    return ticks
+  }
+
+  const getYTicks = () => {
+    const [min, max] = getYDomain()
+    const ticks = []
+    let current = Math.ceil(min / 10000) * 10000
+    while (current <= max) {
+      ticks.push(current)
+      current += 10000
+    }
+    if (ticks.length > 10) {
+      const step = Math.ceil(ticks.length / 8)
+      return ticks.filter((_, i) => i % step === 0)
+    }
+    return ticks
   }
 
   useEffect(() => {
@@ -217,6 +259,8 @@ export function CustomerSegmentation() {
   const hasData = data.clusterData && data.clusterData.length > 0
   const xDomain = getXDomain()
   const yDomain = getYDomain()
+  const xTicks = getXTicks()
+  const yTicks = getYTicks()
 
   return (
     <Card className="p-6 border-none shadow-md bg-card/50 backdrop-blur">
@@ -275,7 +319,7 @@ export function CustomerSegmentation() {
               size="icon"
               className="h-7 w-7"
               onClick={handleZoomIn}
-              disabled={scale >= 5}
+              disabled={scale >= 20}
             >
               <ZoomIn className="h-3 w-3" />
             </Button>
@@ -313,9 +357,9 @@ export function CustomerSegmentation() {
                   dataKey="x"
                   name="Frekuensi"
                   stroke="hsl(var(--muted-foreground))"
-                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 13, fontWeight: 500 }}
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12, fontWeight: 500 }}
                   domain={xDomain}
-                  tickCount={6}
+                  ticks={xTicks}
                   label={{
                     value: "Frekuensi Score (%)",
                     position: "bottom",
@@ -330,13 +374,13 @@ export function CustomerSegmentation() {
                   dataKey="y"
                   name="Nilai Transaksi"
                   stroke="hsl(var(--muted-foreground))"
-                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11, fontWeight: 500 }}
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10, fontWeight: 500 }}
                   tickFormatter={(val) =>
-                    val >= 1000000 ? `Rp ${Math.round(val / 1000000)}JT` : `Rp ${Math.round(val / 1000)}K`
+                    val >= 1000000 ? `Rp${Math.round(val / 1000000)}JT` : `Rp${Math.round(val / 1000)}K`
                   }
-                  width={60}
+                  width={55}
                   domain={yDomain}
-                  tickCount={5}
+                  ticks={yTicks}
                 />
 
                 <Customized
