@@ -224,8 +224,10 @@ export const STRATEGY_POOLS: Record<string, any[]> = {
   ],
 }
 
+
+
 // ============================================================
-// STEP 2: AI SELECTION — pilih 3 strategi dari 50 pool
+// STEP 2: AI SELECTION — Versi Improved (Lebih Variatif)
 // ============================================================
 
 export async function getAIRecommendations(segment: any, allSegments: any[]) {
@@ -233,14 +235,12 @@ export async function getAIRecommendations(segment: any, allSegments: any[]) {
     const pool = STRATEGY_POOLS[segment.name as keyof typeof STRATEGY_POOLS] || []
     if (pool.length === 0) return []
 
-    // Hitung konteks perbandingan antar segmen
+    // ... (bagian hitung metrik tetap sama seperti sebelumnya)
     const totalRevenue = allSegments.reduce((sum, s) => sum + s.avgValue * s.count, 0)
     const maxAvgTx = Math.max(...allSegments.map((s) => s.avgValue))
-    const minAvgTx = Math.min(...allSegments.filter((s) => s.avgValue > 0).map((s) => s.avgValue))
     const segRevenue = segment.avgValue * segment.count
     const revenueShare = totalRevenue > 0 ? ((segRevenue / totalRevenue) * 100).toFixed(1) : "0"
 
-    // Hitung metrik RFM dari metricList jika tersedia
     const metricList = segment.metricList || []
     const avgFreq = metricList.length > 0
       ? (metricList.reduce((sum: number, c: any) => sum + (c.frequency || 1), 0) / metricList.length).toFixed(1)
@@ -249,7 +249,6 @@ export async function getAIRecommendations(segment: any, allSegments: any[]) {
       ? (metricList.reduce((sum: number, c: any) => sum + (c.recency || 0), 0) / metricList.length).toFixed(0)
       : "tidak diketahui"
 
-    // Klasifikasi relatif untuk AI
     const txRatio = maxAvgTx > 0 ? segment.avgValue / maxAvgTx : 0
     const txLevel = txRatio >= 0.7 ? "TINGGI" : txRatio >= 0.35 ? "SEDANG" : "RENDAH"
     const freqNum = parseFloat(avgFreq as string)
@@ -257,72 +256,75 @@ export async function getAIRecommendations(segment: any, allSegments: any[]) {
     const recencyNum = parseInt(avgRecency as string)
     const recencyLevel = isNaN(recencyNum) ? "tidak diketahui" : recencyNum <= 30 ? "BARU (aktif)" : recencyNum <= 90 ? "SEDANG" : "LAMA (tidak aktif)"
 
-    // Semua segmen untuk konteks perbandingan
     const segmentContext = allSegments
       .map((s) => `  - ${s.name}: ${s.count} customer, avg Rp ${Math.round(s.avgValue).toLocaleString("id-ID")}, ${((s.avgValue * s.count / totalRevenue) * 100).toFixed(1)}% revenue`)
       .join("\n")
 
-    const prompt = `Anda adalah konsultan bisnis UMKM yang ahli dalam strategi pemasaran berbasis data RFM.
+    // === RANDOM VARIATION untuk meningkatkan diversity ===
+    const variations = [
+      "Berikan pilihan yang kreatif dan sedikit berbeda dari yang biasa dipilih.",
+      "Fokus pada strategi yang punya potensi upside tinggi meski agak berisiko.",
+      "Campur antara strategi retention, re-engagement, dan growth.",
+      "Pikirkan pendekatan yang lebih personal dan human.",
+      "Prioritaskan strategi yang bisa memberikan wow effect ke pelanggan."
+    ]
+    const randomVariation = variations[Math.floor(Math.random() * variations.length)]
 
-Pilih 3 strategi yang PALING COCOK berdasarkan DATA AKTUAL segmen ini.
+    const prompt = `Anda adalah konsultan bisnis UMKM yang kreatif dan berpengalaman.
+
+${randomVariation}
+
+Pilih **3 strategi yang BERBEDA secara signifikan** dari pool berikut yang PALING COCOK dengan kondisi segmen ini.
 
 === DATA AKTUAL SEGMEN: ${segment.name} ===
 - Jumlah Customer: ${segment.count} orang
-- Avg. Transaksi: Rp ${Math.round(segment.avgValue).toLocaleString("id-ID")} → level ${txLevel} dibanding segmen lain
-- Total Revenue: Rp ${Math.round(segRevenue).toLocaleString("id-ID")} (${revenueShare}% dari total bisnis)
-- Rata-rata Frekuensi Beli: ${avgFreq}x → ${freqLevel}
-- Rata-rata Hari Sejak Transaksi Terakhir: ${avgRecency} hari → ${recencyLevel}
+- Avg. Transaksi: Rp ${Math.round(segment.avgValue).toLocaleString("id-ID")} → level ${txLevel}
+- Total Revenue: Rp \( {Math.round(segRevenue).toLocaleString("id-ID")} ( \){revenueShare}% dari total)
+- Rata-rata Frekuensi: ${avgFreq}x → ${freqLevel}
+- Rata-rata Recency: ${avgRecency} hari → ${recencyLevel}
 
 === PERBANDINGAN SEMUA SEGMEN ===
 ${segmentContext}
 
-=== INSTRUKSI PEMILIHAN ===
-Berdasarkan data di atas, pilih 3 dari 50 strategi berikut yang PALING SESUAI dengan kondisi aktual segmen ini.
-Jangan hanya memilih berdasarkan nama segmen. Gunakan data frekuensi, recency, dan nilai transaksi untuk memilih.
+=== INSTRUKSI PENTING ===
+- Jangan selalu pilih strategi yang paling "aman" atau paling populer.
+- Buat kombinasi yang beragam (misalnya: 1 re-engagement + 1 retention + 1 upselling/growth).
+- Sesuaikan benar-benar dengan data recency, frequency, dan avg transaction.
+- Setiap kali dipanggil, usahakan hasilnya berbeda dari sebelumnya.
 
-Contoh logika:
-- Jika recency LAMA → prioritaskan strategi re-engagement/reaktivasi
-- Jika frekuensi RENDAH → prioritaskan strategi dorong pembelian ulang
-- Jika avgTx TINGGI tapi recency SEDANG → prioritaskan retensi dan reward
-- Jika avgTx RENDAH dan freq RENDAH → prioritaskan edukasi dan kemudahan transaksi pertama
+=== 50 STRATEGI ===
+\( {pool.map((s: any) => ` \){s.id}: ${s.nama}`).join("\n")}
 
-=== 50 STRATEGI (ID: NAMA) ===
-${pool.map((s: any) => `${s.id}: ${s.nama}`).join("\n")}
-
-OUTPUT HANYA JSON ini (tanpa teks lain):
+OUTPUT HANYA JSON (tanpa penjelasan apapun di luar JSON):
 {
   "selected": [
-    { "id": "XX-00", "reason": "alasan spesifik berdasarkan data" },
-    { "id": "XX-00", "reason": "alasan spesifik berdasarkan data" },
-    { "id": "XX-00", "reason": "alasan spesifik berdasarkan data" }
+    { "id": "XX-00", "reason": "alasan spesifik dan singkat berdasarkan data" },
+    { "id": "XX-00", "reason": "alasan spesifik dan singkat berdasarkan data" },
+    { "id": "XX-00", "reason": "alasan spesifik dan singkat berdasarkan data" }
   ]
 }`
 
     const { text } = await generateText({
       model: groq("llama-3.3-70b-versatile"),
       prompt: prompt,
-      temperature: 0.9,
-      maxTokens: 800,
+      temperature: 1.25,     // lebih tinggi
+      topP: 0.95,
+      maxTokens: 900,
     })
 
     // Parse JSON
     let parsed
     try {
       const jsonMatch = text.match(/\{[\s\S]*\}/)
-      if (jsonMatch) {
-        parsed = JSON.parse(jsonMatch[0])
-      } else {
-        parsed = JSON.parse(text)
-      }
-    } catch {
-      console.error("[v0] Failed to parse AI selection, using fallback")
-      return pool.slice(0, 3)
+      parsed = JSON.parse(jsonMatch ? jsonMatch[0] : text)
+    } catch (e) {
+      console.error("[v1] Failed to parse AI selection")
+      return getRandomDiverse(pool) // fallback
     }
 
     const selected = parsed.selected || []
-    if (selected.length === 0) return pool.slice(0, 3)
+    if (selected.length < 3) return getRandomDiverse(pool)
 
-    // Ambil strategi berdasarkan ID yang dipilih AI
     const recommendations = selected
       .map((s: any) => {
         const found = pool.find((p: any) => p.id === s.id)
@@ -330,12 +332,19 @@ OUTPUT HANYA JSON ini (tanpa teks lain):
       })
       .filter(Boolean)
 
-    return recommendations.length >= 3 ? recommendations.slice(0, 3) : pool.slice(0, 3)
+    return recommendations.length >= 3 ? recommendations.slice(0, 3) : getRandomDiverse(pool)
+
   } catch (error) {
-    console.error("[v0] AI Strategy Selection Error:", error)
-    const pool = STRATEGY_POOLS[segment.name as keyof typeof STRATEGY_POOLS] || []
-    return pool.slice(0, 3)
+    console.error("[v1] AI Strategy Selection Error:", error)
+    return getRandomDiverse(STRATEGY_POOLS[segment.name as keyof typeof STRATEGY_POOLS] || [])
   }
+}
+
+// Fallback: Pilih 3 strategi secara random tapi beragam
+function getRandomDiverse(pool: any[]) {
+  if (pool.length < 3) return pool
+  const shuffled = [...pool].sort(() => 0.5 - Math.random())
+  return shuffled.slice(0, 3).map(s => ({ ...s, reason: "Rekomendasi diversifikasi (fallback)" }))
 }
 
 // ============================================================
