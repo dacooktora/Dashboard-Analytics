@@ -1,4 +1,4 @@
- // Strategy Scoring System — VOTING PER CUSTOMER (PARTIAL MATCH)
+// Strategy Scoring System — VOTING PER CUSTOMER (PARTIAL MATCH)
 // Setiap customer dihitung skor ke semua strategi, lalu di-vote dengan bobot parsial
 
 function hitungKondisi(customer: any, benchmark: any) {
@@ -21,7 +21,7 @@ function hitungKondisi(customer: any, benchmark: any) {
 }
 
 export function calculateBenchmark(segments: any[]) {
-    const allCustomers = segments.flatMap((seg) => seg.metricList || seg.customers || [])
+  const allCustomers = segments.flatMap((seg) => seg.metricList || seg.customers || [])
   if (allCustomers.length === 0) {
     return { avgTxGlobal: 0, freqP25: 0, freqP75: 0 }
   }
@@ -184,7 +184,7 @@ export const STRATEGY_POOLS: Record<string, any[]> = {
     { id: "LV-39", nama: "Notifikasi awal sebelum harga naik — ciptakan sense of urgency", kondisi: ["recency_sedang", "avgTx_rendah"] },
     { id: "LV-40", nama: "Pesan WA yang sangat personal — sebut nama dan histori mereka", kondisi: ["recency_lama", "freq_rendah"] },
     { id: "LV-41", nama: "Penawaran eksklusif yang tidak tersedia di toko atau marketplace lain", kondisi: ["avgTx_rendah", "recency_sedang"] },
-    { id: "LV-42", nama: "Program tier mudah — cukup 2 transaksi lagi untuk naik level", condizioni: ["freq_rendah", "recency_baru"] },
+    { id: "LV-42", nama: "Program tier mudah — cukup 2 transaksi lagi untuk naik level", kondisi: ["freq_rendah", "recency_baru"] },
     { id: "LV-43", nama: "Voucher besar untuk pertama kali coba kategori produk baru", kondisi: ["freq_rendah", "avgTx_rendah"] },
     { id: "LV-44", nama: "Konten cara hemat maksimal dengan produk yang sudah mereka kenal", kondisi: ["avgTx_sangat_rendah", "recency_sedang"] },
     { id: "LV-45", nama: "Pesan akhir — jika tidak ada respons dalam 90 hari, kirim penawaran final", kondisi: ["recency_lama", "freq_rendah"] },
@@ -227,7 +227,7 @@ export const STRATEGY_POOLS: Record<string, any[]> = {
     { id: "PT-30", nama: "Paket mini — kombinasi produk kecil dengan total harga sangat terjangkau", kondisi: ["avgTx_sangat_rendah", "freq_rendah"] },
     { id: "PT-31", nama: "Penawaran percobaan produk dengan harga paling minimal yang tersedia", kondisi: ["avgTx_sangat_rendah", "freq_rendah"] },
     { id: "PT-32", nama: "Gamifikasi ringan — badge pelanggan baru dengan tantangan kecil", kondisi: ["freq_rendah", "recency_baru"] },
-    { id: "PT-33", nama: "Konten mengapa pelanggan lain terus kembali membeli", kondisi: ["freq_rendah", "recency_sedang"] },  
+    { id: "PT-33", nama: "Konten mengapa pelanggan lain terus kembali membeli", kondisi: ["freq_rendah", "recency_sedang"] },
     { id: "PT-34", nama: "Penawaran beli satu gratis satu untuk produk entry-level tertentu", kondisi: ["avgTx_sangat_rendah", "freq_rendah"] },
     { id: "PT-35", nama: "Retargeting via WhatsApp untuk pelanggan yang tidak respons email", kondisi: ["recency_lama", "freq_rendah"] },
     { id: "PT-36", nama: "Konten manfaat dan urgensi ringan tanpa tekanan berlebihan", kondisi: ["recency_sedang", "avgTx_sangat_rendah"] },
@@ -253,7 +253,7 @@ export function getDynamicRecommendations(segment: any, allSegments: any[]) {
   try {
     const benchmark = calculateBenchmark(allSegments)
     const pool = STRATEGY_POOLS[segment.name as keyof typeof STRATEGY_POOLS] || []
-    const customerList = segment.metricList  segment.customers  []
+    const customerList = segment.metricList || segment.customers || []
 
     if (!customerList || customerList.length === 0) {
       console.log("[v1] No customer list found for segment:", segment.name)
@@ -293,7 +293,8 @@ export function getDynamicRecommendations(segment: any, allSegments: any[]) {
       }))
       .sort((a: any, b: any) => b.votes - a.votes || b.skor - a.skor)
       .slice(0, 3)
- console.log("[v1] Segment:", segment.name, "Top recommendations (voting):", ranked.map((r: any) => ${r.id} (${r.votes.toFixed(2)} votes)))
+
+    console.log("[v1] Segment:", segment.name, "Top recommendations (voting):", ranked.map((r: any) => `${r.id} (${r.votes.toFixed(2)} votes)`))
     return ranked
   } catch (error) {
     console.error("[v1] Error calculating recommendations:", error)
