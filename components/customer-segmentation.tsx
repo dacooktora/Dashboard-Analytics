@@ -35,80 +35,53 @@ const RenderZoomedDots = ({
   offsetX,
   offsetY,
 }: any) => {
-  // Recharts <Customized> tidak mengirim prop "xAxis"/"yAxis" secara langsung,
-  // melainkan "xAxisMap"/"yAxisMap" (object, keyed by axis id).
-  // Ambil axis pertama dari map tersebut agar .scale() bisa dipakai.
   const xAxis = xAxisMap && Object.values(xAxisMap)[0]
   const yAxis = yAxisMap && Object.values(yAxisMap)[0]
 
   if (!xAxis || !yAxis || !data || !(xAxis as any).scale || !(yAxis as any).scale)
     return null
 
+  const xScale = (xAxis as any).scale
+  const yScale = (yAxis as any).scale
+  const xRange = xScale.range()
+  const yRange = yScale.range()
+  const xMin = Math.min(...xRange)
+  const xMax = Math.max(...xRange)
+  const yMin = Math.min(...yRange)
+  const yMax = Math.max(...yRange)
+
   return (
     <g>
-      {/* Cluster enclosures */}
-      {segments.map((segmentName: string) => {
-        const points = data.filter((d: any) => d.segment === segmentName)
-        if (points.length < 1) return null
+      <defs>
+        <clipPath id="chart-clip">
+          <rect x={xMin} y={yMin} width={xMax - xMin} height={yMax - yMin} />
+        </clipPath>
+      </defs>
 
-        const avgX = points.reduce((sum: number, p: any) => sum + p.x, 0) / points.length
-        const avgY = points.reduce((sum: number, p: any) => sum + p.y, 0) / points.length
+      <g clipPath="url(#chart-clip)">
+        {/* Data points - titik membesar pas zoom, gak keluar batas */}
+        {data.map((point: any, idx: number) => {
+          const cx = xScale(point.x)
+          const cy = yScale(point.y)
+          const color = COLORS[point.segment as keyof typeof COLORS] || "#888"
 
-        const cx = (xAxis as any).scale(avgX)
-        const cy = (yAxis as any).scale(avgY)
+          const zoomedCx = offsetX + cx * scale
+          const zoomedCy = offsetY + cy * scale
 
-        const pixelDistances = points.map((p: any) => {
-          const px = (xAxis as any).scale(p.x)
-          const py = (yAxis as any).scale(p.y)
-          return Math.sqrt(Math.pow(px - cx, 2) + Math.pow(py - cy, 2))
-        })
-
-        const maxDist = Math.max(...pixelDistances)
-        const radius = (maxDist || 30) + 30
-        const color = COLORS[segmentName as keyof typeof COLORS]
-
-        // Apply zoom transform to enclosure
-        const zoomedCx = offsetX + cx * scale
-        const zoomedCy = offsetY + cy * scale
-
-        return (
-          <circle
-            key={`enclosure-${segmentName}`}
-            cx={zoomedCx}
-            cy={zoomedCy}
-            r={radius * scale}
-            fill={color}
-            fillOpacity={0.05}
-            stroke={color}
-            strokeWidth={2}
-            strokeDasharray="10 5"
-          />
-        )
-      })}
-
-      {/* Data points with zoom */}
-      {data.map((point: any, idx: number) => {
-        const cx = (xAxis as any).scale(point.x)
-        const cy = (yAxis as any).scale(point.y)
-        const color = COLORS[point.segment as keyof typeof COLORS] || "#888"
-
-        // Apply zoom transform only to dot positions
-        const zoomedCx = offsetX + cx * scale
-        const zoomedCy = offsetY + cy * scale
-
-        return (
-          <circle
-            key={`dot-${idx}`}
-            cx={zoomedCx}
-            cy={zoomedCy}
-            r={6}
-            fill={color}
-            fillOpacity={0.9}
-            stroke="#fff"
-            strokeWidth={2}
-          />
-        )
-      })}
+          return (
+            <circle
+              key={`dot-${idx}`}
+              cx={zoomedCx}
+              cy={zoomedCy}
+              r={6 * scale}
+              fill={color}
+              fillOpacity={0.9}
+              stroke="#fff"
+              strokeWidth={2}
+            />
+          )
+        })}
+      </g>
     </g>
   )
 }
@@ -122,14 +95,11 @@ export function CustomerSegmentation() {
   const [offsetY, setOffsetY] = useState(0)
   const lastPinchDist = useRef<number | null>(null)
   const chartAreaRef = useRef<HTMLDivElement>(null)
-  // Sumber kebenaran transform yang sinkron (state React bisa lag 1 event saat gesture cepat)
   const transformRef = useRef({ scale: 1, offsetX: 0, offsetY: 0 })
 
   const MIN_SCALE = 0.5
   const MAX_SCALE = 5
 
-  // Zoom dengan "anchor": titik (anchorX, anchorY) di layar tetap diam di tempatnya,
-  // konten di sekitarnya yang membesar/mengecil mengelilingi titik itu.
   const applyZoom = useCallback((rawScale: number, anchorX: number, anchorY: number) => {
     const newScale = Math.min(Math.max(rawScale, MIN_SCALE), MAX_SCALE)
     const { scale: oldScale, offsetX: oldOffsetX, offsetY: oldOffsetY } = transformRef.current
@@ -183,15 +153,12 @@ export function CustomerSegmentation() {
   const getTouchDist = (t1: React.Touch, t2: React.Touch) =>
     Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY)
 
-  // Mulai gesture pinch baru: catat jarak awal 2 jari
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (e.touches.length === 2) {
       lastPinchDist.current = getTouchDist(e.touches[0], e.touches[1])
     }
   }, [])
 
-  // Pinch to zoom handler — anchor di titik tengah 2 jari (relatif ke area chart),
-  // jadi area yang dipencet tetap diam, bukan ketarik ke pojok
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
       if (e.touches.length === 2 && chartAreaRef.current) {
@@ -213,10 +180,8 @@ export function CustomerSegmentation() {
     [applyZoom]
   )
 
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length < 2) {
-      lastPinchDist.current = null
-    }
+  const handleTouchEnd = useCallback(() => {
+    lastPinchDist.current = null
   }, [])
 
   if (!data) {
@@ -244,6 +209,9 @@ export function CustomerSegmentation() {
         <h2 className="text-lg font-semibold">K-Means Customer Segmentation</h2>
         <p className="text-sm text-muted-foreground mt-1">
           Visualisasi pengelompokan pelanggan berdasarkan Frekuensi vs Nilai Transaksi
+        </p>
+        <p className="text-xs text-muted-foreground mt-0.5">
+          💡 Zoom: pinch (2 jari) atau tombol +/-
         </p>
       </div>
 
@@ -274,7 +242,6 @@ export function CustomerSegmentation() {
         </div>
       ) : (
         <>
-          {/* Zoom Controls */}
           <div className="flex items-center justify-end gap-2 mb-2">
             <span className="text-xs text-muted-foreground">
               {Math.round(scale * 100)}%
@@ -307,7 +274,6 @@ export function CustomerSegmentation() {
             </Button>
           </div>
 
-          {/* Chart */}
           <div
             ref={chartAreaRef}
             style={{
@@ -354,7 +320,6 @@ export function CustomerSegmentation() {
                   width={90}
                 />
 
-                {/* Render zoomed dots via Customized */}
                 <Customized
                   component={(props: any) => (
                     <RenderZoomedDots
@@ -392,7 +357,6 @@ export function CustomerSegmentation() {
                   wrapperStyle={{ fontSize: "11px" }}
                 />
 
-                {/* Invisible scatter untuk tooltip tetap jalan */}
                 {segmentList.map((segmentName) => (
                   <Scatter
                     key={segmentName}
