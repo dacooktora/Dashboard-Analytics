@@ -26,29 +26,7 @@ const COLORS = {
   Potential: "#eab308",
 }
 
-// Custom tooltip yang lebih jelas
-const CustomTooltip = ({ active, payload }: any) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload
-    return (
-      <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
-        <p className="text-sm font-semibold text-gray-800">
-          {data.segment}
-        </p>
-        <p className="text-xs text-gray-600">
-          Frekuensi: {data.x.toFixed(1)}
-        </p>
-        <p className="text-xs text-gray-600 font-medium">
-          Nilai Transaksi: Rp {data.y.toLocaleString("id-ID")}
-        </p>
-      </div>
-    )
-  }
-  return null
-}
-
 const RenderZoomedDots = ({
-  segments,
   data,
   xAxisMap,
   yAxisMap,
@@ -72,7 +50,6 @@ const RenderZoomedDots = ({
   const yMin = Math.min(...yRange)
   const yMax = Math.max(...yRange)
 
-  // Ukuran titik: minimal 4px, maksimal 12px, mengecil pelan pas zoom
   const dotSize = Math.min(12, Math.max(4, 8 / Math.sqrt(scale)))
 
   return (
@@ -112,6 +89,26 @@ const RenderZoomedDots = ({
   )
 }
 
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload
+    return (
+      <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
+        <p className="text-sm font-semibold text-gray-800">
+          {data.segment}
+        </p>
+        <p className="text-xs text-gray-600">
+          Frekuensi: {data.x.toFixed(1)}
+        </p>
+        <p className="text-xs text-gray-600 font-medium">
+          Nilai Transaksi: Rp {data.y.toLocaleString("id-ID")}
+        </p>
+      </div>
+    )
+  }
+  return null
+}
+
 export function CustomerSegmentation() {
   const { data } = useDataStore()
   const [isClient, setIsClient] = useState(false)
@@ -120,6 +117,7 @@ export function CustomerSegmentation() {
   const [offsetX, setOffsetX] = useState(0)
   const [offsetY, setOffsetY] = useState(0)
   const [selectedDot, setSelectedDot] = useState<any>(null)
+  const [activeSegment, setActiveSegment] = useState<string | null>(null)
   const lastPinchDist = useRef<number | null>(null)
   const chartAreaRef = useRef<HTMLDivElement>(null)
   const transformRef = useRef({ scale: 1, offsetX: 0, offsetY: 0 })
@@ -266,6 +264,26 @@ export function CustomerSegmentation() {
     setSelectedDot(point)
   }
 
+  // Handler klik badge segmen
+  const handleSegmentClick = (segmentName: string) => {
+    if (activeSegment === segmentName) {
+      // Klik 2x → balik ke semua (null)
+      setActiveSegment(null)
+    } else {
+      // Klik 1x → filter ke segmen itu
+      setActiveSegment(segmentName)
+    }
+    // Reset selected dot biar tooltip ilang
+    setSelectedDot(null)
+  }
+
+  // Filter data berdasarkan activeSegment
+  const getFilteredData = () => {
+    if (!data?.clusterData) return []
+    if (activeSegment === null) return data.clusterData
+    return data.clusterData.filter((d: any) => d.segment === activeSegment)
+  }
+
   if (!data) {
     return (
       <Card className="p-6 border-none shadow-md bg-card/50 backdrop-blur">
@@ -283,11 +301,17 @@ export function CustomerSegmentation() {
   }
 
   const segmentList = ["High Value", "Medium Value", "Low Value", "Potential"]
-  const hasData = data.clusterData && data.clusterData.length > 0
+  const filteredData = getFilteredData()
+  const hasData = filteredData && filteredData.length > 0
   const xDomain = getXDomain()
   const yDomain = getYDomain()
   const xTicks = getXTicks()
   const yTicks = getYTicks()
+
+  // Hitung jumlah data per segmen buat ditampilkan di badge
+  const getSegmentCount = (name: string) => {
+    return data.clusterData?.filter((d: any) => d.segment === name).length || 0
+  }
 
   return (
     <Card className="p-6 border-none shadow-md bg-card/50 backdrop-blur">
@@ -297,30 +321,45 @@ export function CustomerSegmentation() {
           Visualisasi pengelompokan pelanggan berdasarkan Frekuensi vs Nilai Transaksi
         </p>
         <p className="text-xs text-muted-foreground mt-0.5">
-          💡 Zoom: pinch (2 jari) atau tombol +/-
+          💡 Klik badge segmen untuk filter, klik lagi untuk menampilkan semua
         </p>
       </div>
 
+      {/* Badge segmen — jadi tombol filter */}
       <div className="flex flex-wrap gap-2 mb-4">
-        {data.segments.map((segment) => (
-          <Badge
-            key={segment.name}
-            variant="outline"
-            style={{
-              borderColor: COLORS[segment.name as keyof typeof COLORS],
-              color: COLORS[segment.name as keyof typeof COLORS],
-              backgroundColor: `${COLORS[segment.name as keyof typeof COLORS]}10`,
-            }}
-            className="font-medium px-3 py-1"
-          >
-            {segment.name} ({segment.count})
-          </Badge>
-        ))}
+        {segmentList.map((segmentName) => {
+          const isActive = activeSegment === segmentName
+          const color = COLORS[segmentName as keyof typeof COLORS]
+          const count = getSegmentCount(segmentName)
+
+          return (
+            <button
+              key={segmentName}
+              onClick={() => handleSegmentClick(segmentName)}
+              className={`
+                px-3 py-1.5 rounded-full text-sm font-medium transition-all
+                border-2 
+                ${isActive 
+                  ? `bg-${color} text-white shadow-lg scale-105` 
+                  : 'bg-transparent hover:scale-105'
+                }
+              `}
+              style={{
+                backgroundColor: isActive ? color : 'transparent',
+                color: isActive ? '#fff' : color,
+                borderColor: color,
+                boxShadow: isActive ? `0 0 15px ${color}40` : 'none',
+              }}
+            >
+              {segmentName} ({count})
+            </button>
+          )
+        })}
       </div>
 
       {!hasData ? (
         <div className="flex items-center justify-center h-[300px] text-muted-foreground">
-          <p>Data cluster tidak tersedia</p>
+          <p>Tidak ada data untuk segmen yang dipilih</p>
         </div>
       ) : !isClient ? (
         <div className="flex items-center justify-center h-[300px] text-muted-foreground">
@@ -416,8 +455,7 @@ export function CustomerSegmentation() {
                   component={(props: any) => (
                     <RenderZoomedDots
                       {...props}
-                      segments={segmentList}
-                      data={data.clusterData}
+                      data={filteredData}
                       scale={scale}
                       offsetX={offsetX}
                       offsetY={offsetY}
@@ -428,18 +466,18 @@ export function CustomerSegmentation() {
 
                 <Tooltip content={<CustomTooltip />} />
 
-                {/* Scatter buat tooltip alternative */}
+                {/* Scatter buat tooltip alternative (tetep semua data biar tooltip jalan) */}
                 {segmentList.map((segmentName) => (
                   <Scatter
                     key={segmentName}
                     name={segmentName}
-                    data={data.clusterData.filter((d) => d.segment === segmentName)}
+                    data={filteredData.filter((d: any) => d.segment === segmentName)}
                     fill="transparent"
                     opacity={0}
                   >
-                    {data.clusterData
-                      .filter((d) => d.segment === segmentName)
-                      .map((entry, index) => (
+                    {filteredData
+                      .filter((d: any) => d.segment === segmentName)
+                      .map((entry: any, index: number) => (
                         <Cell
                           key={`cell-${segmentName}-${index}`}
                           fill="transparent"
