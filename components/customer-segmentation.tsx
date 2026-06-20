@@ -59,7 +59,6 @@ const RenderZoomedDots = ({
       </defs>
 
       <g clipPath="url(#chart-clip)">
-        {/* Data points - titik membesar pas zoom, gak keluar batas */}
         {data.map((point: any, idx: number) => {
           const cx = xScale(point.x)
           const cy = yScale(point.y)
@@ -118,6 +117,20 @@ export function CustomerSegmentation() {
   const getContainerCenter = () => {
     const rect = chartAreaRef.current?.getBoundingClientRect()
     return rect ? { x: rect.width / 2, y: rect.height / 2 } : { x: 0, y: 0 }
+  }
+
+  // Hitung domain dinamis untuk sumbu X dan Y berdasarkan zoom
+  const getXDomain = () => {
+    const range = 100 / scale
+    const center = 50 - offsetX / scale
+    return [Math.max(0, center - range / 2), Math.min(100, center + range / 2)]
+  }
+
+  const getYDomain = () => {
+    const maxY = data?.clusterData?.reduce((max, d) => Math.max(max, d.y), 0) || 10000000
+    const range = maxY / scale
+    const center = maxY / 2 - offsetY / scale
+    return [Math.max(0, center - range / 2), Math.min(maxY, center + range / 2)]
   }
 
   useEffect(() => {
@@ -202,10 +215,12 @@ export function CustomerSegmentation() {
 
   const segmentList = ["High Value", "Medium Value", "Low Value", "Potential"]
   const hasData = data.clusterData && data.clusterData.length > 0
+  const xDomain = getXDomain()
+  const yDomain = getYDomain()
 
   return (
     <Card className="p-6 border-none shadow-md bg-card/50 backdrop-blur">
-      <div className="mb-6">
+      <div className="mb-4">
         <h2 className="text-lg font-semibold">K-Means Customer Segmentation</h2>
         <p className="text-sm text-muted-foreground mt-1">
           Visualisasi pengelompokan pelanggan berdasarkan Frekuensi vs Nilai Transaksi
@@ -287,7 +302,7 @@ export function CustomerSegmentation() {
             onTouchEnd={handleTouchEnd}
           >
             <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart margin={{ top: 20, right: 10, bottom: 50, left: 10 }}>
+              <ScatterChart margin={{ top: 10, right: 5, bottom: 40, left: -10 }}>
                 <CartesianGrid
                   strokeDasharray="3 3"
                   vertical={false}
@@ -298,14 +313,16 @@ export function CustomerSegmentation() {
                   dataKey="x"
                   name="Frekuensi"
                   stroke="hsl(var(--muted-foreground))"
-                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                  domain={[0, 100]}
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 13, fontWeight: 500 }}
+                  domain={xDomain}
+                  tickCount={6}
                   label={{
                     value: "Frekuensi Score (%)",
                     position: "bottom",
-                    offset: 30,
+                    offset: 25,
                     fill: "hsl(var(--muted-foreground))",
-                    fontSize: 11,
+                    fontSize: 13,
+                    fontWeight: 500,
                   }}
                 />
                 <YAxis
@@ -313,11 +330,13 @@ export function CustomerSegmentation() {
                   dataKey="y"
                   name="Nilai Transaksi"
                   stroke="hsl(var(--muted-foreground))"
-                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11, fontWeight: 500 }}
                   tickFormatter={(val) =>
-                    `Rp ${Math.round(val).toLocaleString("id-ID")}`
+                    val >= 1000000 ? `Rp ${Math.round(val / 1000000)}JT` : `Rp ${Math.round(val / 1000)}K`
                   }
-                  width={90}
+                  width={60}
+                  domain={yDomain}
+                  tickCount={5}
                 />
 
                 <Customized
@@ -347,14 +366,6 @@ export function CustomerSegmentation() {
                       return [`Rp ${value.toLocaleString("id-ID")}`, name]
                     return [value, name]
                   }}
-                />
-                <Legend
-                  verticalAlign="top"
-                  align="center"
-                  height={36}
-                  iconType="circle"
-                  iconSize={8}
-                  wrapperStyle={{ fontSize: "11px" }}
                 />
 
                 {segmentList.map((segmentName) => (
