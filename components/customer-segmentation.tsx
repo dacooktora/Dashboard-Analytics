@@ -13,14 +13,15 @@ import {
   ResponsiveContainer,
   Legend,
   Cell,
-  Customized, // Declared the Customized variable
+  Customized,
 } from "recharts"
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 
 const COLORS = {
-  "High Value": "#ef4444", // Red
-  "Medium Value": "#3b82f6", // Blue
-  "Low Value": "#22c55e", // Green
-  Potential: "#eab308", // Yellow
+  "High Value": "#ef4444",
+  "Medium Value": "#3b82f6",
+  "Low Value": "#22c55e",
+  Potential: "#eab308",
 }
 
 const RenderClusterEnclosures = ({ segments, data, xAxis, yAxis }: any) => {
@@ -95,6 +96,9 @@ export function CustomerSegmentation() {
         <p className="text-sm text-muted-foreground mt-1">
           Visualisasi pengelompokan pelanggan berdasarkan Frekuensi vs Nilai Transaksi
         </p>
+        <p className="text-xs text-muted-foreground mt-0.5">
+          💡 Pinch (2 jari) untuk zoom, geser untuk eksplorasi
+        </p>
       </div>
 
       <div className="flex flex-wrap gap-2 mb-6">
@@ -114,81 +118,118 @@ export function CustomerSegmentation() {
         ))}
       </div>
 
-      <ResponsiveContainer width="100%" height={320}>
-        <ScatterChart margin={{ top: 20, right: 10, bottom: 50, left: 10 }}>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-          <XAxis
-            type="number"
-            dataKey="x"
-            name="Frekuensi"
-            stroke="hsl(var(--muted-foreground))"
-            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-            domain={[0, 100]}
-            label={{
-              value: "Frekuensi Score (%)",
-              position: "bottom",
-              offset: 30,
-              fill: "hsl(var(--muted-foreground))",
-              fontSize: 11,
-            }}
-          />
-          <YAxis
-            type="number"
-            dataKey="y"
-            name="Nilai Transaksi"
-            stroke="hsl(var(--muted-foreground))"
-            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
-            tickFormatter={(val) => `Rp ${Math.round(val).toLocaleString("id-ID")}`}
-            width={90}
-          />
-
-          {/* @ts-ignore - Recharts internal props for Customized */}
-          <Customized
-            component={(props: any) => (
-              <RenderClusterEnclosures {...props} segments={segmentList} data={data.clusterData} />
-            )}
-          />
-
-          <Tooltip
-  cursor={{ strokeDasharray: "3 3" }}
-  contentStyle={{
-    backgroundColor: "#ffffff",
-    border: "1px solid #e5e7eb",
-    borderRadius: "12px",
-    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-    padding: "12px",
-  }}
-            formatter={(value: any, name: string) => {
-              if (name === "Nilai Transaksi") return [`Rp ${value.toLocaleString("id-ID")}`, name]
-              return [value, name]
-            }}
-          />
-          <Legend verticalAlign="top" align="center" height={36} iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "11px" }} />
-
-          {segmentList.map((segmentName) => (
-            <Scatter
-              key={segmentName}
-              name={segmentName}
-              data={data.clusterData.filter((d) => d.segment === segmentName)}
-              fill={COLORS[segmentName as keyof typeof COLORS]}
-              animationDuration={1500}
+      <TransformWrapper
+        initialScale={1}
+        minScale={0.5}
+        maxScale={5}
+        centerOnInit={true}
+        limitToBounds={true}
+        smooth={true}
+        wheel={{ step: 0.05 }}
+        pinch={{ step: 0.05 }}
+      >
+        {({ setTransform }) => (
+          <>
+            <div className="flex justify-end mb-1">
+              <button
+                onClick={() => setTransform(1, 0, 0)}
+                className="text-xs text-muted-foreground hover:text-primary underline"
+              >
+                Reset Zoom
+              </button>
+            </div>
+            <TransformComponent
+              wrapperStyle={{
+                width: "100%",
+                height: 370,
+                touchAction: "none",
+              }}
             >
-              {data.clusterData
-                .filter((d) => d.segment === segmentName)
-                .map((entry, index) => (
-                  <Cell
-                    key={`cell-${segmentName}-${index}`}
-                    fill={COLORS[segmentName as keyof typeof COLORS]}
-                    fillOpacity={0.9}
-                    stroke="#fff"
-                    strokeWidth={2}
-                    r={6} // Consistent point size
+              <ResponsiveContainer width="100%" height={350}>
+                <ScatterChart margin={{ top: 20, right: 10, bottom: 50, left: 10 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                  <XAxis
+                    type="number"
+                    dataKey="x"
+                    name="Frekuensi"
+                    stroke="hsl(var(--muted-foreground))"
+                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                    domain={[0, 100]}
+                    label={{
+                      value: "Frekuensi Score (%)",
+                      position: "bottom",
+                      offset: 30,
+                      fill: "hsl(var(--muted-foreground))",
+                      fontSize: 11,
+                    }}
                   />
-                ))}
-            </Scatter>
-          ))}
-        </ScatterChart>
-      </ResponsiveContainer>
+                  <YAxis
+                    type="number"
+                    dataKey="y"
+                    name="Nilai Transaksi"
+                    stroke="hsl(var(--muted-foreground))"
+                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                    tickFormatter={(val) => `Rp ${Math.round(val).toLocaleString("id-ID")}`}
+                    width={90}
+                  />
+
+                  <Customized
+                    component={(props: any) => (
+                      <RenderClusterEnclosures {...props} segments={segmentList} data={data.clusterData} />
+                    )}
+                  />
+
+                  <Tooltip
+                    cursor={{ strokeDasharray: "3 3" }}
+                    contentStyle={{
+                      backgroundColor: "#ffffff",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+                      padding: "12px",
+                    }}
+                    formatter={(value: any, name: string) => {
+                      if (name === "Nilai Transaksi") return [`Rp ${value.toLocaleString("id-ID")}`, name]
+                      return [value, name]
+                    }}
+                  />
+                  <Legend
+                    verticalAlign="top"
+                    align="center"
+                    height={36}
+                    iconType="circle"
+                    iconSize={8}
+                    wrapperStyle={{ fontSize: "11px" }}
+                  />
+
+                  {segmentList.map((segmentName) => (
+                    <Scatter
+                      key={segmentName}
+                      name={segmentName}
+                      data={data.clusterData.filter((d) => d.segment === segmentName)}
+                      fill={COLORS[segmentName as keyof typeof COLORS]}
+                      animationDuration={1500}
+                    >
+                      {data.clusterData
+                        .filter((d) => d.segment === segmentName)
+                        .map((entry, index) => (
+                          <Cell
+                            key={`cell-${segmentName}-${index}`}
+                            fill={COLORS[segmentName as keyof typeof COLORS]}
+                            fillOpacity={0.9}
+                            stroke="#fff"
+                            strokeWidth={2}
+                            r={6}
+                          />
+                        ))}
+                    </Scatter>
+                  ))}
+                </ScatterChart>
+              </ResponsiveContainer>
+            </TransformComponent>
+          </>
+        )}
+      </TransformWrapper>
     </Card>
   )
 }
