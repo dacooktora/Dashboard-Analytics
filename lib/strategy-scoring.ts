@@ -21,7 +21,7 @@ function hitungKondisi(customer: any, benchmark: any) {
 }
 
 export function calculateBenchmark(segments: any[]) {
-  const allCustomers = segments.flatMap((seg) => seg.metricList  seg.customers  [])
+    const allCustomers = segments.flatMap((seg) => seg.metricList || seg.customers || [])
   if (allCustomers.length === 0) {
     return { avgTxGlobal: 0, freqP25: 0, freqP75: 0 }
   }
