@@ -150,14 +150,14 @@ export function CustomerSegmentation() {
           />
 
           <Tooltip
-            cursor={{ strokeDasharray: "3 3" }}
-            contentStyle={{
-              backgroundColor: "hsl(var(--popover))",
-              border: "none",
-              borderRadius: "12px",
-              boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-              padding: "12px",
-            }}
+  cursor={{ strokeDasharray: "3 3" }}
+  contentStyle={{
+    backgroundColor: "#ffffff",
+    border: "1px solid #e5e7eb",
+    borderRadius: "12px",
+    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+    padding: "12px",
+  }}
             formatter={(value: any, name: string) => {
               if (name === "Nilai Transaksi") return [`Rp ${value.toLocaleString("id-ID")}`, name]
               return [value, name]
