@@ -293,7 +293,7 @@ ${segmentContext}
 - Setiap kali dipanggil, usahakan hasilnya berbeda dari sebelumnya.
 
 === 50 STRATEGI ===
-\( {pool.map((s: any) => ` \){s.id}: ${s.nama}`).join("\n")}
+${pool.map((s: any) => `${s.id}: ${s.nama}`).join("\n")}
 
 OUTPUT HANYA JSON (tanpa penjelasan apapun di luar JSON):
 {
