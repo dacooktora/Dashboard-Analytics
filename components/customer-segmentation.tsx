@@ -109,7 +109,7 @@ export function CustomerSegmentation() {
             style={{
               borderColor: COLORS[segment.name as keyof typeof COLORS],
               color: COLORS[segment.name as keyof typeof COLORS],
-             backgroundColor: ${COLORS[segment.name as keyof typeof COLORS]}10,
+              backgroundColor: ${COLORS[segment.name as keyof typeof COLORS]}10,
             }}
             className="font-medium px-3 py-1"
           >
