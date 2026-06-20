@@ -25,7 +25,7 @@ const COLORS = {
 }
 
 const RenderClusterEnclosures = ({ segments, data, xAxis, yAxis }: any) => {
-  if (!xAxis || !yAxis || !data || !xAxis.scale || !yAxis.scale) return null
+  if (!xAxis  !yAxis  !data  !xAxis.scale  !yAxis.scale) return null
 
   return (
     <g>
@@ -41,7 +41,7 @@ const RenderClusterEnclosures = ({ segments, data, xAxis, yAxis }: any) => {
 
         const pixelDistances = points.map((p: any) => {
           const px = xAxis.scale(p.x)
-          const py = yAxis.scale(p.y)
+          const py = xAxis.scale(p.y)
           return Math.sqrt(Math.pow(px - cx, 2) + Math.pow(py - cy, 2))
         })
 
@@ -52,7 +52,7 @@ const RenderClusterEnclosures = ({ segments, data, xAxis, yAxis }: any) => {
 
         return (
           <circle
-            key={`enclosure-${segmentName}`}
+            key={enclosure-${segmentName}}
             cx={cx}
             cy={cy}
             r={radius}
@@ -97,7 +97,7 @@ export function CustomerSegmentation() {
           Visualisasi pengelompokan pelanggan berdasarkan Frekuensi vs Nilai Transaksi
         </p>
         <p className="text-xs text-muted-foreground mt-0.5">
-          💡 Pinch (2 jari) untuk zoom, geser untuk eksplorasi
+          💡 Geser / scroll / pinch untuk zoom in/out
         </p>
       </div>
 
@@ -109,7 +109,7 @@ export function CustomerSegmentation() {
             style={{
               borderColor: COLORS[segment.name as keyof typeof COLORS],
               color: COLORS[segment.name as keyof typeof COLORS],
-              backgroundColor: `${COLORS[segment.name as keyof typeof COLORS]}10`,
+             backgroundColor: ${COLORS[segment.name as keyof typeof COLORS]}10,
             }}
             className="font-medium px-3 py-1"
           >
@@ -169,7 +169,7 @@ export function CustomerSegmentation() {
                     name="Nilai Transaksi"
                     stroke="hsl(var(--muted-foreground))"
                     tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
-                    tickFormatter={(val) => `Rp ${Math.round(val).toLocaleString("id-ID")}`}
+                    tickFormatter={(val) => Rp ${Math.round(val).toLocaleString("id-ID")}}
                     width={90}
                   />
 
@@ -189,7 +189,7 @@ export function CustomerSegmentation() {
                       padding: "12px",
                     }}
                     formatter={(value: any, name: string) => {
-                      if (name === "Nilai Transaksi") return [`Rp ${value.toLocaleString("id-ID")}`, name]
+                      if (name === "Nilai Transaksi") return [Rp ${value.toLocaleString("id-ID")}, name]
                       return [value, name]
                     }}
                   />
@@ -214,7 +214,7 @@ export function CustomerSegmentation() {
                         .filter((d) => d.segment === segmentName)
                         .map((entry, index) => (
                           <Cell
-                            key={`cell-${segmentName}-${index}`}
+                            key={cell-${segmentName}-${index}}
                             fill={COLORS[segmentName as keyof typeof COLORS]}
                             fillOpacity={0.9}
                             stroke="#fff"
