@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
@@ -39,6 +39,27 @@ export function SegmentDetails() {
   const [sortField, setSortField] = useState<SortField>("transaction_amount")
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc")
   const itemsPerPage = 20
+
+  // State buat nyimpen rekomendasi per segmen
+  const [recommendationsMap, setRecommendationsMap] = useState<Record<string, any[]>>({})
+  const [loadingRecs, setLoadingRecs] = useState<Record<string, boolean>>({})
+
+  // Fetch rekomendasi dari AI tiap kali data berubah
+  useEffect(() => {
+    if (data) {
+      data.segments.forEach(async (segment) => {
+        setLoadingRecs(prev => ({ ...prev, [segment.name]: true }))
+        try {
+          const recs = await getDynamicRecommendations(segment, data.segments)
+          setRecommendationsMap(prev => ({ ...prev, [segment.name]: recs }))
+        } catch (error) {
+          console.error("Error fetching recommendations for", segment.name, error)
+        } finally {
+          setLoadingRecs(prev => ({ ...prev, [segment.name]: false }))
+        }
+      })
+    }
+  }, [data])
 
   const handleViewDetail = (segment: any) => {
     setSelectedSegment(segment)
@@ -178,14 +199,16 @@ export function SegmentDetails() {
 
               <div className="border-t border-border pt-4">
                 <p className="text-xs font-medium text-muted-foreground mb-2">Rekomendasi Strategi:</p>
-                {(() => {
-                  const recs = getDynamicRecommendations(segment, data.segments)
-                  return (
-                    <div className="mb-4">
-                      <StrategyAccordion recommendations={recs} segmentName={segment.name} />
-                    </div>
-                  )
-                })()}
+                {loadingRecs[segment.name] ? (
+                  <div className="text-sm text-muted-foreground py-2">Memuat rekomendasi...</div>
+                ) : (
+                  <div className="mb-4">
+                    <StrategyAccordion 
+                      recommendations={recommendationsMap[segment.name] || []} 
+                      segmentName={segment.name} 
+                    />
+                  </div>
+                )}
 
                 <Button
                   variant="outline"
@@ -304,8 +327,8 @@ export function SegmentDetails() {
                     </div>
                   </div>
                 </div>
-                <div className="border rounded-lg">
-                  <Table>
+                <div className="border rounded-lg overflow-x-auto">
+                  <Table className="min-w-[700px]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>ID</TableHead>
@@ -377,11 +400,15 @@ export function SegmentDetails() {
 
               <Card className="p-4 bg-primary/5">
                 <h3 className="font-semibold mb-3">Rekomendasi Aksi untuk Segment Ini</h3>
-                <StrategyAccordion
-                  recommendations={getDynamicRecommendations(selectedSegment, data.segments)}
-                  segmentName={selectedSegment.name}
-                  showMeta
-                />
+                {loadingRecs[selectedSegment.name] ? (
+                  <div className="text-sm text-muted-foreground py-2">Memuat rekomendasi...</div>
+                ) : (
+                  <StrategyAccordion
+                    recommendations={recommendationsMap[selectedSegment.name] || []}
+                    segmentName={selectedSegment.name}
+                    showMeta
+                  />
+                )}
               </Card>
             </div>
           )}
