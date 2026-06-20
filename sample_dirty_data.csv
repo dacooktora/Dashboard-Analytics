@@ -1,0 +1,363 @@
+customer_id,customer_name,email,phone,region,age,created_at,transaction_id,transaction_date,amount,category,payment_method
+CUST-001,Budi Santoso,budi.santoso@mail,081234567890,Jakarta Pusat,32,2024-09-15,TRX-001,2024-10-05,1450000,Nasi Goreng,Credit Card
+CUST-001,Budi Santoso,budi.santoso@mail,081234567890,Jakarta Pusat,32,2024-09-15,TRX-002,2024-10-20,1380000,Mie Ayam,Debit Card
+CUST-001,Budi Santoso,budi.santoso@mail,081234567890,Jakarta Pusat,32,2024-09-15,TRX-003,2024-11-08,1420000,Bakso,E-Wallet
+CUST-002,Siti Rahayu, siti.rahayu@mail.com ,0812234567,Jakarta Timur,28,2024-09-20,TRX-004,2024-10-08,1325000,Lumpia,Cash
+CUST-002,Siti Rahayu,siti.rahayu@mail.com,0812234567,Jakarta Timur,28,2024-09-20,TRX-005,2024-11-15,1240000,Tahu Goreng,Credit Card
+CUST-003,Ahmad Wijaya,ahmad.wijaya@mail.com,0812345678,Bandung,45,2024-08-30,TRX-006,2024-10-10,1425000,Sate Ayam,Debit Card
+CUST-003,Ahmad Wijaya,ahmad.wijaya@mail.com,0812345678,Bandung,45,2024-08-30,TRX-007,11-18-2024,0,Nasi Goreng,E-Wallet
+CUST-004,Dewi Kusuma,dewi.kusuma@mail,0812456789,Jakarta Barat,35,2024-09-05,TRX-008,2024-10-15,1175000,Gado-gado,Cash
+CUST-004,Dewi Kusuma,dewi.kusuma@mail.com,0812456789,Jakarta Barat,35,2024-09-05,TRX-009,2024-10-28,1160000,Martabak,Credit Card
+CUST-004,Dewi Kusuma,dewi.kusuma@mail.com,0812456789,Jakarta Barat,35,2024-09-05,TRX-010,2024-11-10,1255000,Lumpia,Debit Card
+CUST-005,Rinto Harahap,rinto.harahap@mail.com,0812567890,Jakarta Selatan,29,2024-09-12,TRX-011,2024-10-20,1210000,Nasi Goreng,E-Wallet
+CUST-005,Rinto Harahap,rinto.harahap@mail.com,0812567890,Jakarta Selatan,29,2024-09-12,TRX-012,2024-11-05,1195000,Soto Ayam,Cash
+CUST-006,Lina Margareta,lina.margareta@mail,0812678901,Tangerang,38,2024-09-01,,TRX-013,2024-10-05,1205000,Mie Ayam,Credit Card
+CUST-006,Lina Margareta,lina.margareta@mail.com,0812678901,Tangerang,38,2024-09-01,TRX-014,2024-10-19,1190000,Gado-gado,Debit Card
+CUST-006,Lina Margareta,lina.margareta@mail.com,0812678901,Tangerang,38,2024-09-01,TRX-015,2024-11-02,1210000,Tahu Goreng,E-Wallet
+CUST-007,Eka Putri,eka.putri@mail.com,0812789012,Bekasi,26,2024-09-18,TRX-016,2024-10-12,985000,Nasi Goreng,Cash
+CUST-007,Eka Putri,eka.putri@mail.com,0812789012,Bekasi,26,2024-09-18,TRX-017,2024-10-30,1015000,Lumpia,Credit Card
+CUST-007,Eka Putri,eka.putri@mail.com,0812789012,Bekasi,26,2024-09-18,TRX-018,2024-11-14,1020000,Bakso,Debit Card
+CUST-008,Bambang Sutrisno, bambang@mail.com ,0812890123,Depok,51,2024-08-25,TRX-019,2024-10-08,1235000,Soto Ayam,E-Wallet
+CUST-008,Bambang Sutrisno,bambang@mail.com,0812890123,Depok,51,2024-08-25,TRX-020,2024-10-25,1240000,Martabak,Cash
+CUST-009,Hana Wijaya,hana.wijaya@mail.com,0812901234,Bogor,33,2024-09-10,TRX-021,10-18-2024,1145000,Nasi Goreng,Credit Card
+CUST-009,Hana Wijaya,hana.wijaya@mail.com,0812901234,Bogor,33,2024-09-10,TRX-022,2024-11-02,1140000,Sate Ayam,Debit Card
+CUST-010,Citra Dewi,citra.dewi@mail.com,0812012345,Jakarta Pusat,42,2024-09-08,,TRX-023,2024-10-06,1195000,Gado-gado,E-Wallet
+CUST-010,Citra Dewi,citra.dewi@mail.com,0812012345,Jakarta Pusat,42,2024-09-08,TRX-024,2024-10-24,1185000,Perkedel,Cash
+CUST-011,Riski Hermawan,riski.hermawan@mail.com,0813123456,Jakarta Timur,27,2024-09-22,TRX-025,2024-10-14,-105000,Mie Goreng,Credit Card
+CUST-012,Mega Surya,mega.surya@mail.com,0813234567,Bandung,31,2024-09-14,TRX-026,2024-10-20,835000,Bakso,Debit Card
+CUST-012,Mega Surya,mega.surya@mail.com,0813234567,Bandung,31,2024-09-14,TRX-027,2024-11-08,840000,Soto Ayam,E-Wallet
+CUST-013,Farah Azahra,farah.azahra@mail.com,0813345678,Jakarta Barat,24,2024-09-28,TRX-028,2024-10-22,785000,Tahu Goreng,Cash
+CUST-014,Yusuf Rahman,yusuf.rahman@mail.com,0813456789,Jakarta Selatan,37,2024-09-03,TRX-029,2024-10-10,965000,Lumpia,Credit Card
+CUST-014,Yusuf Rahman,yusuf.rahman@mail.com,0813456789,Jakarta Selatan,37,2024-09-03,TRX-030,2024-10-28,970000,Perkedel,Debit Card
+CUST-015,Nina Saputri,nina.saputri@mail.com,0813567890,Tangerang,30,2024-09-11,TRX-031,2024-10-15,845000,Mie Ayam,E-Wallet
+CUST-016,Doni Mardiana,doni.mardiana@mail.com,0813678901,Bekasi,46,2024-08-29,TRX-032,2024-10-09,985000,Nasi Goreng,Cash
+CUST-016,Doni Mardiana,doni.mardiana@mail.com,0813678901,Bekasi,46,2024-08-29,TRX-033,2024-10-27,980000,Gado-gado,Credit Card
+CUST-017,Indri Yulianti,indri.yulianti@mail.com,0813789012,Depok,29,2024-09-19,TRX-034,2024-10-17,805000,Bakso,Debit Card
+CUST-018,Joni Pranoto,joni.pranoto@mail.com,0813890123,Bogor,48,2024-08-31,TRX-035,2024-10-12,1010000,Sate Ayam,E-Wallet
+CUST-018,Joni Pranoto,joni.pranoto@mail.com,0813890123,Bogor,48,2024-08-31,TRX-036,2024-10-30,1020000,Martabak,Cash
+CUST-019,Lestari Wijaya,lestari.wijaya@mail.com,0813901234,Jakarta Pusat,35,2024-09-07,TRX-037,2024-10-19,945000,Lumpia,Credit Card
+CUST-019,Lestari Wijaya,lestari.wijaya@mail.com,0813901234,Jakarta Pusat,35,2024-09-07,TRX-038,2024-11-06,950000,Tahu Goreng,Debit Card
+CUST-020,Samsul Arifin,samsul.arifin@mail.com,0813012345,Jakarta Timur,44,2024-09-02,TRX-039,2024-10-11,1015000,Perkedel,E-Wallet
+CUST-020,Samsul Arifin,samsul.arifin@mail.com,0813012345,Jakarta Timur,44,2024-09-02,TRX-040,2024-10-29,1025000,Mie Goreng,Cash
+CUST-021,Vera Ratna,vera.ratna@mail.com,0814123456,Jakarta Barat,26,2024-09-20,TRX-041,2024-10-23,830000,Nasi Goreng,Credit Card
+CUST-021,Vera Ratna,vera.ratna@mail.com,0814123456,Jakarta Barat,26,2024-09-20,TRX-042,2024-11-10,825000,Soto Ayam,Debit Card
+CUST-022,Rio Pratama,rio.pratama@mail.com,0814234567,Jakarta Selatan,52,2024-08-26,TRX-043,2024-10-05,1245000,Bakso,E-Wallet
+CUST-022,Rio Pratama,rio.pratama@mail.com,0814234567,Jakarta Selatan,52,2024-08-26,TRX-044,2024-10-22,1250000,Gado-gado,Cash
+CUST-023,Putri Amalina,putri.amalina@mail.com,0814345678,Tangerang,28,2024-09-13,TRX-045,2024-10-16,840000,Martabak,Credit Card
+CUST-023,Putri Amalina,putri.amalina@mail.com,0814345678,Tangerang,28,2024-09-13,TRX-046,2024-11-03,845000,Lumpia,Debit Card
+CUST-024,Kharis Suryanto,kharis.suryanto@mail.com,0814456789,Bandung,39,2024-09-06,TRX-047,2024-10-13,990000,Tahu Goreng,E-Wallet
+CUST-024,Kharis Suryanto,kharis.suryanto@mail.com,0814456789,Bandung,39,2024-09-06,TRX-048,2024-11-01,995000,Perkedel,Cash
+CUST-025,Maya Kusuma,maya.kusuma@mail.com,0814567890,Bekasi,31,2024-09-17,TRX-049,2024-10-21,855000,Mie Ayam,Credit Card
+CUST-025,Maya Kusuma,maya.kusuma@mail.com,0814567890,Bekasi,31,2024-09-17,TRX-050,2024-11-09,860000,Nasi Goreng,Debit Card
+CUST-026,Agus Poernomo,agus.poernomo@mail.com,0814678901,Depok,49,2024-08-28,TRX-051,2024-10-14,1020000,Sate Ayam,E-Wallet
+CUST-026,Agus Poernomo,agus.poernomo@mail.com,0814678901,Depok,49,2024-08-28,,TRX-052,2024-11-02,1030000,Martabak,Cash
+CUST-027,Cindy Handoko,cindy.handoko@mail.com,0814789012,Bogor,25,2024-09-24,TRX-053,2024-10-26,825000,Lumpia,Credit Card
+CUST-027,Cindy Handoko,cindy.handoko@mail.com,0814789012,Bogor,25,2024-09-24,TRX-054,2024-11-14,820000,Gado-gado,Debit Card
+CUST-028,Toni Wijaya,toni.wijaya@mail.com,0814890123,Jakarta Pusat,41,2024-09-04,TRX-055,2024-10-17,1000000,Bakso,E-Wallet
+CUST-028,Toni Wijaya,toni.wijaya@mail.com,0814890123,Jakarta Pusat,41,2024-09-04,TRX-056,2024-11-05,1010000,Tahu Goreng,Cash
+CUST-029,Rina Setiawan,rina.setiawan@mail.com,0814901234,Jakarta Timur,34,2024-09-21,TRX-057,2024-10-20,965000,Perkedel,Credit Card
+CUST-029,Rina Setiawan,rina.setiawan@mail.com,0814901234,Jakarta Timur,34,2024-09-21,TRX-058,2024-11-07,970000,Mie Goreng,Debit Card
+CUST-030,Anang Sugiana,anang.sugiana@mail.com,0814012345,Jakarta Barat,43,2024-09-09,TRX-059,2024-10-18,985000,Nasi Goreng,E-Wallet
+CUST-030,Anang Sugiana,anang.sugiana@mail.com,0814012345,Jakarta Barat,43,2024-09-09,TRX-060,2024-11-04,990000,Soto Ayam,Cash
+CUST-031,Rully Hermawan,rully.hermawan@mail.com,0815123456,Jakarta Selatan,27,2024-09-25,TRX-061,2024-10-23,810000,Bakso,Credit Card
+CUST-032,Soeswanti Putri,soeswanti.putri@mail.com,0815234567,Tangerang,36,2024-09-12,TRX-062,2024-10-29,945000,Gado-gado,Debit Card
+CUST-032,Soeswanti Putri,soeswanti.putri@mail.com,0815234567,Tangerang,36,2024-09-12,TRX-063,2024-11-16,940000,Martabak,E-Wallet
+CUST-033,Galih Pranoto,galih.pranoto@mail.com,0815345678,Bandung,30,2024-09-16,TRX-064,2024-10-15,835000,Lumpia,Cash
+CUST-034,Hendra Wijaya,hendra.wijaya@mail.com,0815456789,Bekasi,47,2024-08-27,TRX-065,2024-10-10,1015000,Tahu Goreng,Credit Card
+CUST-034,Hendra Wijaya,hendra.wijaya@mail.com,0815456789,Bekasi,47,2024-08-27,TRX-066,2024-10-28,1020000,Perkedel,Debit Card
+CUST-035,Lia Amelia,lia.amelia@mail.com,0815567890,Depok,32,2024-09-23,TRX-067,2024-10-19,950000,Mie Ayam,E-Wallet
+CUST-036,Bambang Setiawan,bambang.setiawan@mail.com,0815678901,Bogor,50,2024-08-30,TRX-068,2024-10-12,1245000,Nasi Goreng,Cash
+CUST-036,Bambang Setiawan,bambang.setiawan@mail.com,0815678901,Bogor,50,2024-08-30,TRX-069,2024-10-31,1250000,Sate Ayam,Credit Card
+CUST-037,Yenny Hermawan,yenny.hermawan@mail.com,0815789012,Jakarta Pusat,29,2024-09-18,TRX-070,2024-10-24,825000,Bakso,Debit Card
+CUST-038,Dedi Harahap,dedi.harahap@mail.com,0815890123,Jakarta Timur,40,2024-09-05,TRX-071,2024-10-16,975000,Gado-gado,E-Wallet
+CUST-038,Dedi Harahap,dedi.harahap@mail.com,0815890123,Jakarta Timur,40,2024-09-05,TRX-072,2024-11-03,980000,Martabak,Cash
+CUST-039,Lidia Surya,lidia.surya@mail.com,0815901234,Jakarta Barat,38,2024-09-11,TRX-073,2024-10-20,960000,Lumpia,Credit Card
+CUST-039,Lidia Surya,lidia.surya@mail.com,0815901234,Jakarta Barat,38,2024-09-11,TRX-074,2024-11-08,955000,Tahu Goreng,Debit Card
+CUST-040,Fuad Rahman,fuad.rahman@mail.com,0815012345,Jakarta Selatan,44,2024-09-14,TRX-075,2024-10-17,995000,Perkedel,E-Wallet
+CUST-040,Fuad Rahman,fuad.rahman@mail.com,0815012345,Jakarta Selatan,44,2024-09-14,TRX-076,2024-11-05,1000000,Mie Goreng,Cash
+CUST-041,Sofi Hartanti,sofi.hartanti@mail.com,0816123456,Tangerang,26,2024-09-22,TRX-077,2024-10-21,805000,Nasi Goreng,Credit Card
+CUST-042,Reno Purnama,reno.purnama@mail.com,0816234567,Bandung,33,2024-09-08,TRX-078,2024-10-18,840000,Soto Ayam,Debit Card
+CUST-042,Reno Purnama,reno.purnama@mail.com,0816234567,Bandung,33,2024-09-08,TRX-079,2024-11-06,845000,Bakso,E-Wallet
+CUST-043,Wulan Sari,wulan.sari@mail.com,0816345678,Bekasi,28,2024-09-19,TRX-080,2024-10-22,820000,Gado-gado,Cash
+CUST-044,Toto Suryono,toto.suryono@mail.com,0816456789,Depok,51,2024-08-25,TRX-081,2024-10-09,1235000,Martabak,Credit Card
+CUST-044,Toto Suryono,toto.suryono@mail.com,0816456789,Depok,51,2024-08-25,TRX-082,2024-10-27,1240000,Lumpia,Debit Card
+CUST-045,Ratna Susanti,ratna.susanti@mail.com,0816567890,Bogor,35,2024-09-10,TRX-083,2024-10-14,955000,Tahu Goreng,E-Wallet
+CUST-045,Ratna Susanti,ratna.susanti@mail.com,0816567890,Bogor,35,2024-09-10,TRX-084,2024-11-02,960000,Perkedel,Cash
+CUST-046,Irfan Ridho,irfan.ridho@mail.com,0816678901,Jakarta Pusat,42,2024-09-03,TRX-085,2024-10-11,990000,Mie Ayam,Credit Card
+CUST-046,Irfan Ridho,irfan.ridho@mail.com,0816678901,Jakarta Pusat,42,2024-09-03,TRX-086,2024-10-29,995000,Nasi Goreng,Debit Card
+CUST-047,Sintya Wardani,sintya.wardani@mail.com,0816789012,Jakarta Timur,30,2024-09-17,TRX-087,2024-10-19,830000,Sate Ayam,E-Wallet
+CUST-048,Prakoso Adi,prakoso.adi@mail.com,0816890123,Jakarta Barat,45,2024-09-02,TRX-088,2024-10-15,1000000,Bakso,Cash
+CUST-048,Prakoso Adi,prakoso.adi@mail.com,0816890123,Jakarta Barat,45,2024-09-02,TRX-089,2024-11-03,1005000,Gado-gado,Credit Card
+CUST-049,Juanita Pujiastuti,juanita.pujiastuti@mail.com,0816901234,Jakarta Selatan,27,2024-09-20,TRX-090,2024-10-23,815000,Martabak,Debit Card
+CUST-050,Firman Harahap,firman.harahap@mail.com,0816012345,Tangerang,48,2024-08-28,TRX-091,2024-10-10,1225000,Lumpia,E-Wallet
+CUST-050,Firman Harahap,firman.harahap@mail.com,0816012345,Tangerang,48,2024-08-28,TRX-092,2024-10-30,1220000,Tahu Goreng,Cash
+CUST-051,Gustianna Wijaya,gustianna.wijaya@mail.com,0817123456,Bandung,31,2024-09-15,TRX-093,2024-10-20,840000,Perkedel,Credit Card
+CUST-052,Bima Nugraha,bima.nugraha@mail.com,0817234567,Bekasi,29,2024-09-21,TRX-094,2024-10-25,825000,Mie Goreng,Debit Card
+CUST-053,Erlin Sukanto,erlin.sukanto@mail.com,0817345678,Depok,37,2024-09-07,TRX-095,2024-10-17,960000,Nasi Goreng,E-Wallet
+CUST-053,Erlin Sukanto,erlin.sukanto@mail.com,0817345678,Depok,37,2024-09-07,TRX-096,2024-11-04,965000,Soto Ayam,Cash
+CUST-054,Gayus Wijaya,gayus.wijaya@mail.com,0817456789,Bogor,46,2024-08-31,TRX-097,2024-10-13,1015000,Bakso,Credit Card
+CUST-054,Gayus Wijaya,gayus.wijaya@mail.com,0817456789,Bogor,46,2024-08-31,TRX-098,2024-10-31,1010000,Gado-gado,Debit Card
+CUST-055,Hesty Triyana,hesty.triyana@mail.com,0817567890,Jakarta Pusat,24,2024-09-26,TRX-099,2024-10-29,805000,Martabak,E-Wallet
+CUST-056,Joko Santoso,joko.santoso@mail.com,0817678901,Jakarta Timur,39,2024-09-04,TRX-100,2024-10-16,980000,Lumpia,Cash
+CUST-056,Joko Santoso,joko.santoso@mail.com,0817678901,Jakarta Timur,39,2024-09-04,TRX-101,2024-11-03,985000,Tahu Goreng,Credit Card
+CUST-057,Karen Andhika,karen.andhika@mail.com,0817789012,Jakarta Barat,28,2024-09-13,TRX-102,2024-10-21,830000,Perkedel,Debit Card
+CUST-058,Lakshmi Nata,lakshmi.nata@mail.com,0817890123,Jakarta Selatan,43,2024-09-06,TRX-103,2024-10-14,990000,Mie Ayam,E-Wallet
+CUST-058,Lakshmi Nata,lakshmi.nata@mail.com,0817890123,Jakarta Selatan,43,2024-09-06,TRX-104,2024-11-01,995000,Nasi Goreng,Cash
+CUST-059,Mita Wijaya,mita.wijaya@mail.com,0817901234,Tangerang,25,2024-09-23,TRX-105,2024-10-26,815000,Sate Ayam,Credit Card
+CUST-060,Noto Priawan,noto.priawan@mail.com,0817012345,Bandung,50,2024-08-29,TRX-106,2024-10-11,1240000,Bakso,Debit Card
+CUST-060,Noto Priawan,noto.priawan@mail.com,0817012345,Bandung,50,2024-08-29,TRX-107,2024-10-28,1245000,Gado-gado,E-Wallet
+CUST-061,Ocha Wijaya,ocha.wijaya@mail.com,0818123456,Bekasi,32,2024-09-18,TRX-108,2024-10-22,845000,Martabak,Cash
+CUST-062,Pandji Harahap,pandji.harahap@mail.com,0818234567,Depok,41,2024-09-09,TRX-109,2024-10-17,975000,Lumpia,Credit Card
+CUST-062,Pandji Harahap,pandji.harahap@mail.com,0818234567,Depok,41,2024-09-09,TRX-110,2024-11-05,970000,Tahu Goreng,Debit Card
+CUST-063,Qui Wijaya,qui.wijaya@mail.com,0818345678,Bogor,27,2024-09-25,TRX-111,2024-10-23,820000,Perkedel,E-Wallet
+CUST-064,Rina Wijaya,rina.wijaya@mail.com,0818456789,Jakarta Pusat,38,2024-09-12,TRX-112,2024-10-19,960000,Mie Goreng,Cash
+CUST-064,Rina Wijaya,rina.wijaya@mail.com,0818456789,Jakarta Pusat,38,2024-09-12,TRX-113,2024-11-07,955000,Nasi Goreng,Credit Card
+CUST-065,Sita Wijaya,sita.wijaya@mail.com,0818567890,Jakarta Timur,44,2024-09-01,TRX-114,2024-10-12,1000000,Soto Ayam,Debit Card
+CUST-065,Sita Wijaya,sita.wijaya@mail.com,0818567890,Jakarta Timur,44,2024-09-01,TRX-115,2024-10-30,1005000,Bakso,E-Wallet
+CUST-066,Tina Wijaya,tina.wijaya@mail.com,0818678901,Jakarta Barat,30,2024-09-20,TRX-116,2024-10-25,835000,Gado-gado,Cash
+CUST-067,Udin Wijaya,udin.wijaya@mail.com,0818789012,Jakarta Selatan,47,2024-08-26,TRX-117,2024-10-08,1225000,Martabak,Credit Card
+CUST-067,Udin Wijaya,udin.wijaya@mail.com,0818789012,Jakarta Selatan,47,2024-08-26,TRX-118,2024-10-26,1230000,Lumpia,Debit Card
+CUST-068,Vina Wijaya,vina.wijaya@mail.com,0818890123,Tangerang,26,2024-09-27,TRX-119,2024-10-21,810000,Tahu Goreng,E-Wallet
+CUST-069,Wendi Wijaya,wendi.wijaya@mail.com,0818901234,Bandung,35,2024-09-16,TRX-120,2024-10-18,855000,Perkedel,Cash
+CUST-069,Wendi Wijaya,wendi.wijaya@mail.com,0818901234,Bandung,35,2024-09-16,TRX-121,2024-11-06,850000,Mie Ayam,Credit Card
+CUST-070,Xander Wijaya,xander.wijaya@mail.com,0818012345,Bekasi,49,2024-08-27,TRX-122,2024-10-09,1235000,Nasi Goreng,Debit Card
+CUST-070,Xander Wijaya,xander.wijaya@mail.com,0818012345,Bekasi,49,2024-08-27,TRX-123,2024-10-29,1240000,Sate Ayam,E-Wallet
+CUST-071,Yaya Wijaya,yaya.wijaya@mail.com,0819123456,Depok,33,2024-09-22,TRX-124,2024-10-27,840000,Bakso,Cash
+CUST-072,Zara Wijaya,zara.wijaya@mail.com,0819234567,Bogor,40,2024-09-11,TRX-125,2024-10-20,980000,Gado-gado,Credit Card
+CUST-072,Zara Wijaya,zara.wijaya@mail.com,0819234567,Bogor,40,2024-09-11,TRX-126,2024-11-08,975000,Martabak,Debit Card
+CUST-073,Alfie Wijaya,alfie.wijaya@mail.com,0819345678,Jakarta Pusat,28,2024-09-19,TRX-127,2024-10-24,825000,Lumpia,E-Wallet
+CUST-074,Bona Wijaya,bona.wijaya@mail.com,0819456789,Jakarta Timur,45,2024-09-05,TRX-128,2024-10-15,1005000,Tahu Goreng,Cash
+CUST-074,Bona Wijaya,bona.wijaya@mail.com,0819456789,Jakarta Timur,45,2024-09-05,TRX-129,2024-11-02,1010000,Perkedel,Credit Card
+CUST-075,Cesa Wijaya,cesa.wijaya@mail.com,0819567890,Jakarta Barat,31,2024-09-14,TRX-130,2024-10-22,845000,Mie Goreng,Debit Card
+CUST-076,Darren Wijaya,darren.wijaya@mail.com,0819678901,Jakarta Selatan,48,2024-08-30,TRX-131,2024-10-10,1230000,Nasi Goreng,E-Wallet
+CUST-076,Darren Wijaya,darren.wijaya@mail.com,0819678901,Jakarta Selatan,48,2024-08-30,TRX-132,2024-10-28,1235000,Soto Ayam,Cash
+CUST-077,Eva Wijaya,eva.wijaya@mail.com,0819789012,Tangerang,27,2024-09-24,TRX-133,2024-10-25,815000,Bakso,Credit Card
+CUST-078,Fadli Wijaya,fadli.wijaya@mail.com,0819890123,Bandung,42,2024-09-08,TRX-134,2024-10-17,985000,Gado-gado,Debit Card
+CUST-078,Fadli Wijaya,fadli.wijaya@mail.com,0819890123,Bandung,42,2024-09-08,TRX-135,2024-11-04,990000,Martabak,E-Wallet
+CUST-079,Gita Wijaya,gita.wijaya@mail.com,0819901234,Bekasi,34,2024-09-17,TRX-136,2024-10-21,855000,Lumpia,Cash
+CUST-080,Hasan Wijaya,hasan.wijaya@mail.com,0819012345,Depok,50,2024-08-25,TRX-137,2024-10-12,1245000,Tahu Goreng,Credit Card
+CUST-080,Hasan Wijaya,hasan.wijaya@mail.com,0819012345,Depok,50,2024-08-25,TRX-138,2024-10-31,1250000,Perkedel,Debit Card
+CUST-081,Intan Wijaya,intan.wijaya@mail.com,0820123456,Bogor,29,2024-09-20,TRX-139,2024-10-26,830000,Mie Ayam,E-Wallet
+CUST-082,Jedi Wijaya,jedi.wijaya@mail.com,0820234567,Jakarta Pusat,43,2024-09-10,TRX-140,2024-10-19,990000,Nasi Goreng,Cash
+CUST-082,Jedi Wijaya,jedi.wijaya@mail.com,0820234567,Jakarta Pusat,43,2024-09-10,TRX-141,2024-11-06,995000,Sate Ayam,Credit Card
+CUST-083,Karina Wijaya,karina.wijaya@mail.com,0820345678,Jakarta Timur,26,2024-09-27,TRX-142,2024-10-23,820000,Bakso,Debit Card
+CUST-084,Lana Wijaya,lana.wijaya@mail.com,0820456789,Jakarta Barat,46,2024-09-02,TRX-143,2024-10-11,1020000,Gado-gado,E-Wallet
+CUST-084,Lana Wijaya,lana.wijaya@mail.com,0820456789,Jakarta Barat,46,2024-09-02,TRX-144,2024-10-29,1025000,Martabak,Cash
+CUST-085,Megan Wijaya,megan.wijaya@mail.com,0820567890,Jakarta Selatan,32,2024-09-15,TRX-145,2024-10-20,850000,Lumpia,Credit Card
+CUST-086,Nadia Wijaya,nadia.wijaya@mail.com,0820678901,Tangerang,49,2024-08-28,TRX-146,2024-10-14,1240000,Tahu Goreng,Debit Card
+CUST-086,Nadia Wijaya,nadia.wijaya@mail.com,0820678901,Tangerang,49,2024-08-28,TRX-147,2024-11-01,1245000,Perkedel,E-Wallet
+CUST-087,Olivia Wijaya,olivia.wijaya@mail.com,0820789012,Bandung,25,2024-09-22,TRX-148,2024-10-28,810000,Mie Goreng,Cash
+CUST-088,Pasha Wijaya,pasha.wijaya@mail.com,0820890123,Bekasi,37,2024-09-13,TRX-149,2024-10-16,965000,Nasi Goreng,Credit Card
+CUST-088,Pasha Wijaya,pasha.wijaya@mail.com,0820890123,Bekasi,37,2024-09-13,TRX-150,2024-11-03,970000,Soto Ayam,Debit Card
+CUST-089,Quinn Wijaya,quinn.wijaya@mail.com,0820901234,Depok,44,2024-09-06,TRX-151,2024-10-17,1000000,Bakso,E-Wallet
+CUST-089,Quinn Wijaya,quinn.wijaya@mail.com,0820901234,Depok,44,2024-09-06,TRX-152,2024-11-05,1005000,Gado-gado,Cash
+CUST-090,Raka Wijaya,raka.wijaya@mail.com,0820012345,Bogor,30,2024-09-21,TRX-153,2024-10-24,835000,Martabak,Credit Card
+CUST-091,Sasha Wijaya,sasha.wijaya@mail.com,0821123456,Jakarta Pusat,47,2024-08-31,TRX-154,2024-10-13,1230000,Lumpia,Debit Card
+CUST-091,Sasha Wijaya,sasha.wijaya@mail.com,0821123456,Jakarta Pusat,47,2024-08-31,TRX-155,2024-11-01,1235000,Tahu Goreng,E-Wallet
+CUST-092,Tania Wijaya,tania.wijaya@mail.com,0821234567,Jakarta Timur,28,2024-09-23,TRX-156,2024-10-22,825000,Perkedel,Cash
+CUST-093,Uki Wijaya,uki.wijaya@mail.com,0821345678,Jakarta Barat,51,2024-08-26,TRX-157,2024-10-10,1250000,Mie Ayam,Credit Card
+CUST-093,Uki Wijaya,uki.wijaya@mail.com,0821345678,Jakarta Barat,51,2024-08-26,TRX-158,2024-10-27,1255000,Nasi Goreng,Debit Card
+CUST-094,Vega Wijaya,vega.wijaya@mail.com,0821456789,Jakarta Selatan,33,2024-09-18,TRX-159,2024-10-19,855000,Sate Ayam,E-Wallet
+CUST-095,Wira Wijaya,wira.wijaya@mail.com,0821567890,Tangerang,40,2024-09-09,TRX-160,2024-10-14,985000,Bakso,Cash
+CUST-095,Wira Wijaya,wira.wijaya@mail.com,0821567890,Tangerang,40,2024-09-09,TRX-161,2024-11-02,990000,Gado-gado,Credit Card
+CUST-096,Xenia Wijaya,xenia.wijaya@mail.com,0821678901,Bandung,35,2024-09-16,TRX-162,2024-10-25,960000,Martabak,Debit Card
+CUST-097,Yusuf Wijaya,yusuf.wijaya@mail.com,0821789012,Bekasi,39,2024-09-12,TRX-163,2024-10-21,975000,Lumpia,E-Wallet
+CUST-097,Yusuf Wijaya,yusuf.wijaya@mail.com,0821789012,Bekasi,39,2024-09-12,TRX-164,2024-11-08,980000,Tahu Goreng,Cash
+CUST-098,Zalina Wijaya,zalina.wijaya@mail.com,0821890123,Depok,26,2024-09-25,TRX-165,2024-10-26,815000,Perkedel,Credit Card
+CUST-099,Aryan Wijaya,aryan.wijaya@mail.com,0821901234,Bogor,48,2024-08-29,TRX-166,2024-10-12,1240000,Mie Goreng,Debit Card
+CUST-099,Aryan Wijaya,aryan.wijaya@mail.com,0821901234,Bogor,48,2024-08-29,TRX-167,2024-10-30,1245000,Nasi Goreng,E-Wallet
+CUST-100,Bisma Wijaya,bisma.wijaya@mail.com,0821012345,Jakarta Pusat,31,2024-09-20,TRX-168,2024-10-23,845000,Soto Ayam,Cash
+CUST-101,Chandra Wijaya,chandra.wijaya@mail.com,0822123456,Jakarta Timur,44,2024-09-08,TRX-169,2024-10-18,1000000,Bakso,Credit Card
+CUST-102,Dinda Wijaya,dinda.wijaya@mail.com,0822234567,Jakarta Barat,27,2024-09-24,TRX-170,2024-10-24,820000,Gado-gado,Debit Card
+CUST-103,Elias Wijaya,elias.wijaya@mail.com,0822345678,Jakarta Selatan,50,2024-08-27,TRX-171,2024-10-15,1250000,Martabak,E-Wallet
+CUST-103,Elias Wijaya,elias.wijaya@mail.com,0822345678,Jakarta Selatan,50,2024-08-27,TRX-172,2024-11-02,1255000,Lumpia,Cash
+CUST-104,Fiona Wijaya,fiona.wijaya@mail.com,0822456789,Tangerang,32,2024-09-17,TRX-173,2024-10-20,850000,Tahu Goreng,Credit Card
+CUST-105,Graha Wijaya,graha.wijaya@mail.com,0822567890,Bandung,45,2024-09-04,TRX-174,2024-10-11,1010000,Perkedel,Debit Card
+CUST-105,Graha Wijaya,graha.wijaya@mail.com,0822567890,Bandung,45,2024-09-04,TRX-175,2024-10-29,1015000,Mie Ayam,E-Wallet
+CUST-106,Hanif Wijaya,hanif.wijaya@mail.com,0822678901,Bekasi,28,2024-09-21,TRX-176,2024-10-26,830000,Nasi Goreng,Cash
+CUST-107,Inaya Wijaya,inaya.wijaya@mail.com,0822789012,Depok,41,2024-09-10,TRX-177,2024-10-19,985000,Sate Ayam,Credit Card
+CUST-107,Inaya Wijaya,inaya.wijaya@mail.com,0822789012,Depok,41,2024-09-10,TRX-178,2024-11-06,990000,Bakso,Debit Card
+CUST-108,Jalal Wijaya,jalal.wijaya@mail.com,0822890123,Bogor,38,2024-09-14,TRX-179,2024-10-22,970000,Gado-gado,E-Wallet
+CUST-108,Jalal Wijaya,jalal.wijaya@mail.com,0822890123,Bogor,38,2024-09-14,TRX-180,2024-11-09,975000,Martabak,Cash
+CUST-109,Katya Wijaya,katya.wijaya@mail.com,0822901234,Jakarta Pusat,29,2024-09-22,TRX-181,2024-10-25,825000,Lumpia,Credit Card
+CUST-110,Leno Wijaya,leno.wijaya@mail.com,0822012345,Jakarta Timur,46,2024-09-01,TRX-182,2024-10-13,1225000,Tahu Goreng,Debit Card
+CUST-110,Leno Wijaya,leno.wijaya@mail.com,0822012345,Jakarta Timur,46,2024-09-01,,TRX-183,2024-10-31,1230000,Perkedel,E-Wallet
+CUST-111,Maya Wijaya,maya.wijaya@mail.com,0823123456,Jakarta Barat,35,2024-09-19,TRX-184,2024-10-21,855000,Mie Goreng,Cash
+CUST-112,Nando Wijaya,nando.wijaya@mail.com,0823234567,Jakarta Selatan,49,2024-08-28,TRX-185,2024-10-10,1240000,Nasi Goreng,Credit Card
+CUST-112,Nando Wijaya,nando.wijaya@mail.com,0823234567,Jakarta Selatan,49,2024-08-28,TRX-186,2024-10-28,1245000,Soto Ayam,Debit Card
+CUST-113,Opal Wijaya,opal.wijaya@mail.com,0823345678,Tangerang,26,2024-09-26,TRX-187,2024-10-24,815000,Bakso,E-Wallet
+CUST-114,Prana Wijaya,prana.wijaya@mail.com,0823456789,Bandung,37,2024-09-15,TRX-188,2024-10-18,965000,Gado-gado,Cash
+CUST-114,Prana Wijaya,prana.wijaya@mail.com,0823456789,Bandung,37,2024-09-15,TRX-189,2024-11-05,970000,Martabak,Credit Card
+CUST-115,Qori Wijaya,qori.wijaya@mail.com,0823567890,Bekasi,43,2024-09-09,TRX-190,2024-10-20,1000000,Lumpia,Debit Card
+CUST-116,Ressa Wijaya,ressa.wijaya@mail.com,0823678901,Depok,30,2024-09-23,TRX-191,2024-10-27,840000,Tahu Goreng,E-Wallet
+CUST-116,Ressa Wijaya,ressa.wijaya@mail.com,0823678901,Depok,30,2024-09-23,TRX-192,2024-11-14,835000,Perkedel,Cash
+CUST-117,Shanta Wijaya,shanta.wijaya@mail.com,0823789012,Bogor,47,2024-08-30,TRX-193,2024-10-15,1230000,Mie Ayam,Credit Card
+CUST-118,Tara Wijaya,tara.wijaya@mail.com,0823890123,Jakarta Pusat,28,2024-09-18,TRX-194,2024-10-23,825000,Nasi Goreng,Debit Card
+CUST-118,Tara Wijaya,tara.wijaya@mail.com,0823890123,Jakarta Pusat,28,2024-09-18,TRX-195,2024-11-10,820000,Sate Ayam,E-Wallet
+CUST-119,Ulya Wijaya,ulya.wijaya@mail.com,0823901234,Jakarta Timur,44,2024-09-12,TRX-196,2024-10-19,1005000,Bakso,Cash
+CUST-119,Ulya Wijaya,ulya.wijaya@mail.com,0823901234,Jakarta Timur,44,2024-09-12,TRX-197,2024-11-06,1010000,Gado-gado,Credit Card
+CUST-120,Veren Wijaya,veren.wijaya@mail.com,0823012345,Jakarta Barat,31,2024-09-20,TRX-198,2024-10-25,845000,Martabak,Debit Card
+CUST-121,Widya Wijaya,widya.wijaya@mail.com,0824123456,Jakarta Selatan,48,2024-08-31,TRX-199,2024-10-12,1235000,Lumpia,E-Wallet
+CUST-121,Widya Wijaya,widya.wijaya@mail.com,0824123456,Jakarta Selatan,48,2024-08-31,TRX-200,2024-10-30,1240000,Tahu Goreng,Cash
+CUST-122,Xavi Wijaya,xavi.wijaya@mail.com,0824234567,Tangerang,27,2024-09-25,TRX-201,2024-10-21,815000,Perkedel,Credit Card
+CUST-123,Yatin Wijaya,yatin.wijaya@mail.com,0824345678,Bandung,41,2024-09-13,TRX-202,2024-10-18,985000,Mie Goreng,Debit Card
+CUST-123,Yatin Wijaya,yatin.wijaya@mail.com,0824345678,Bandung,41,2024-09-13,TRX-203,2024-11-05,990000,Nasi Goreng,E-Wallet
+CUST-124,Zaki Wijaya,zaki.wijaya@mail.com,0824456789,Bekasi,36,2024-09-17,TRX-204,2024-10-23,960000,Soto Ayam,Cash
+CUST-124,Zaki Wijaya,zaki.wijaya@mail.com,0824456789,Bekasi,36,2024-09-17,,TRX-205,2024-11-10,965000,Bakso,Credit Card
+CUST-125,Alia Wijaya,alia.wijaya@mail.com,0824567890,Depok,50,2024-08-26,TRX-206,2024-10-14,1250000,Gado-gado,Debit Card
+CUST-125,Alia Wijaya,alia.wijaya@mail.com,0824567890,Depok,50,2024-08-26,TRX-207,2024-11-01,1255000,Martabak,E-Wallet
+CUST-126,Beryl Wijaya,beryl.wijaya@mail.com,0824678901,Bogor,32,2024-09-21,TRX-208,2024-10-20,850000,Lumpia,Cash
+CUST-127,Ciara Wijaya,ciara.wijaya@mail.com,0824789012,Jakarta Pusat,45,2024-09-06,TRX-209,2024-10-15,1010000,Tahu Goreng,Credit Card
+CUST-127,Ciara Wijaya,ciara.wijaya@mail.com,0824789012,Jakarta Pusat,45,2024-09-06,TRX-210,2024-11-02,1015000,Perkedel,Debit Card
+CUST-128,Daphne Wijaya,daphne.wijaya@mail.com,0824890123,Jakarta Timur,28,2024-09-23,TRX-211,2024-10-22,825000,Mie Ayam,E-Wallet
+CUST-129,Esther Wijaya,esther.wijaya@mail.com,0824901234,Jakarta Barat,52,2024-08-25,TRX-212,2024-10-10,1255000,Nasi Goreng,Cash
+CUST-129,Esther Wijaya,esther.wijaya@mail.com,0824901234,Jakarta Barat,52,2024-08-25,TRX-213,2024-10-27,1260000,Sate Ayam,Credit Card
+CUST-130,Farah Wijaya,farah.wijaya@mail.com,0824012345,Jakarta Selatan,33,2024-09-18,TRX-214,2024-10-20,855000,Bakso,Debit Card
+CUST-131,Gracia Wijaya,gracia.wijaya@mail.com,0825123456,Tangerang,40,2024-09-10,TRX-215,2024-10-19,985000,Gado-gado,E-Wallet
+CUST-131,Gracia Wijaya,gracia.wijaya@mail.com,0825123456,Tangerang,40,2024-09-10,TRX-216,2024-11-06,990000,Martabak,Cash
+CUST-132,Hanna Wijaya,hanna.wijaya@mail.com,0825234567,Bandung,27,2024-09-26,TRX-217,2024-10-26,815000,Lumpia,Credit Card
+CUST-133,Iris Wijaya,iris.wijaya@mail.com,0825345678,Bekasi,39,2024-09-14,TRX-218,2024-10-17,975000,Tahu Goreng,Debit Card
+CUST-133,Iris Wijaya,iris.wijaya@mail.com,0825345678,Bekasi,39,2024-09-14,TRX-219,2024-11-04,980000,Perkedel,E-Wallet
+CUST-134,Jada Wijaya,jada.wijaya@mail.com,0825456789,Depok,46,2024-09-02,TRX-220,2024-10-13,1025000,Mie Goreng,Cash
+CUST-134,Jada Wijaya,jada.wijaya@mail.com,0825456789,Depok,46,2024-09-02,TRX-221,2024-10-31,1030000,Nasi Goreng,Credit Card
+CUST-135,Kayla Wijaya,kayla.wijaya@mail.com,0825567890,Bogor,25,2024-09-24,TRX-222,2024-10-28,810000,Soto Ayam,Debit Card
+CUST-136,Leila Wijaya,leila.wijaya@mail.com,0825678901,Jakarta Pusat,43,2024-09-09,TRX-223,2024-10-20,1000000,Bakso,E-Wallet
+CUST-136,Leila Wijaya,leila.wijaya@mail.com,0825678901,Jakarta Pusat,43,2024-09-09,TRX-224,2024-11-07,1005000,Gado-gado,Cash
+CUST-137,Mila Wijaya,mila.wijaya@mail.com,0825789012,Jakarta Timur,30,2024-09-19,TRX-225,2024-10-24,840000,Martabak,Credit Card
+CUST-138,Nora Wijaya,nora.wijaya@mail.com,0825890123,Jakarta Barat,47,2024-08-29,TRX-226,2024-10-11,1230000,Lumpia,Debit Card
+CUST-138,Nora Wijaya,nora.wijaya@mail.com,0825890123,Jakarta Barat,47,2024-08-29,TRX-227,2024-10-29,1235000,Tahu Goreng,E-Wallet
+CUST-139,Octavia Wijaya,octavia.wijaya@mail.com,0825901234,Jakarta Selatan,28,2024-09-22,TRX-228,2024-10-22,825000,Perkedel,Cash
+CUST-140,Piper Wijaya,piper.wijaya@mail.com,0825012345,Tangerang,51,2024-08-27,TRX-229,2024-10-09,1250000,Mie Ayam,Credit Card
+CUST-140,Piper Wijaya,piper.wijaya@mail.com,0825012345,Tangerang,51,2024-08-27,TRX-230,2024-10-26,1255000,Nasi Goreng,Debit Card
+CUST-141,Quinn Wijaya,quinn.wijaya@mail.com,0826123456,Bandung,32,2024-09-16,TRX-231,2024-10-21,845000,Sate Ayam,E-Wallet
+CUST-142,Raven Wijaya,raven.wijaya@mail.com,0826234567,Bekasi,44,2024-09-08,TRX-232,2024-10-18,1000000,Bakso,Cash
+CUST-142,Raven Wijaya,raven.wijaya@mail.com,0826234567,Bekasi,44,2024-09-08,TRX-233,2024-11-05,1005000,Gado-gado,Credit Card
+CUST-143,Sage Wijaya,sage.wijaya@mail.com,0826345678,Depok,26,2024-09-27,TRX-234,2024-10-26,815000,Martabak,Debit Card
+CUST-144,Tasha Wijaya,tasha.wijaya@mail.com,0826456789,Bogor,38,2024-09-17,TRX-235,2024-10-19,970000,Lumpia,E-Wallet
+CUST-144,Tasha Wijaya,tasha.wijaya@mail.com,0826456789,Bogor,38,2024-09-17,TRX-236,2024-11-06,975000,Tahu Goreng,Cash
+CUST-145,Unity Wijaya,unity.wijaya@mail.com,0826567890,Jakarta Pusat,49,2024-08-31,TRX-237,2024-10-12,1240000,Perkedel,Credit Card
+CUST-145,Unity Wijaya,unity.wijaya@mail.com,0826567890,Jakarta Pusat,49,2024-08-31,TRX-238,2024-10-30,1245000,Mie Goreng,Debit Card
+CUST-146,Valerie Wijaya,valerie.wijaya@mail.com,0826678901,Jakarta Timur,27,2024-09-20,TRX-239,2024-10-25,820000,Nasi Goreng,E-Wallet
+CUST-147,Winona Wijaya,winona.wijaya@mail.com,0826789012,Jakarta Barat,45,2024-09-05,TRX-240,2024-10-15,1015000,Soto Ayam,Cash
+CUST-147,Winona Wijaya,winona.wijaya@mail.com,0826789012,Jakarta Barat,45,2024-09-05,TRX-241,2024-11-02,1020000,Bakso,Credit Card
+CUST-148,Ximena Wijaya,ximena.wijaya@mail.com,0826890123,Jakarta Selatan,31,2024-09-15,TRX-242,2024-10-22,850000,Gado-gado,Debit Card
+CUST-149,Yara Wijaya,yara.wijaya@mail.com,0826901234,Tangerang,48,2024-08-28,TRX-243,2024-10-10,1235000,Martabak,E-Wallet
+CUST-149,Yara Wijaya,yara.wijaya@mail.com,0826901234,Tangerang,48,2024-08-28,TRX-244,2024-10-28,1240000,Lumpia,Cash
+CUST-150,Zelda Wijaya,zelda.wijaya@mail.com,0826012345,Bandung,29,2024-09-23,TRX-245,2024-10-27,830000,Tahu Goreng,Credit Card
+CUST-151,Adriana Wijaya,adriana.wijaya@mail.com,0827123456,Bekasi,42,2024-09-11,TRX-246,2024-10-19,990000,Perkedel,Debit Card
+CUST-151,Adriana Wijaya,adriana.wijaya@mail.com,0827123456,Bekasi,42,2024-09-11,TRX-247,2024-11-06,995000,Mie Ayam,E-Wallet
+CUST-152,Brittany Wijaya,brittany.wijaya@mail.com,0827234567,Depok,35,2024-09-18,TRX-248,2024-10-21,960000,Nasi Goreng,Cash
+CUST-153,Cassidy Wijaya,cassidy.wijaya@mail.com,0827345678,Bogor,50,2024-08-26,TRX-249,2024-10-13,1250000,Sate Ayam,Credit Card
+CUST-153,Cassidy Wijaya,cassidy.wijaya@mail.com,0827345678,Bogor,50,2024-08-26,TRX-250,2024-10-31,1255000,Bakso,Debit Card
+CUST-154,Daisy Wijaya,daisy.wijaya@mail.com,0827456789,Jakarta Pusat,24,2024-09-25,TRX-251,2024-10-26,805000,Gado-gado,E-Wallet
+CUST-155,Elena Wijaya,elena.wijaya@mail.com,0827567890,Jakarta Timur,39,2024-09-14,TRX-252,2024-10-18,980000,Martabak,Cash
+CUST-155,Elena Wijaya,elena.wijaya@mail.com,0827567890,Jakarta Timur,39,2024-09-14,TRX-253,2024-11-05,985000,Lumpia,Credit Card
+CUST-156,Faye Wijaya,faye.wijaya@mail.com,0827678901,Jakarta Barat,43,2024-09-09,TRX-254,2024-10-20,1000000,Tahu Goreng,Debit Card
+CUST-156,Faye Wijaya,faye.wijaya@mail.com,0827678901,Jakarta Barat,43,2024-09-09,TRX-255,2024-11-07,1005000,Perkedel,E-Wallet
+CUST-157,Gwen Wijaya,gwen.wijaya@mail.com,0827789012,Jakarta Selatan,26,2024-09-21,TRX-256,2024-10-25,815000,Mie Goreng,Cash
+CUST-158,Haven Wijaya,haven.wijaya@mail.com,0827890123,Tangerang,46,2024-09-03,TRX-257,2024-10-14,1020000,Nasi Goreng,Credit Card
+CUST-158,Haven Wijaya,haven.wijaya@mail.com,0827890123,Tangerang,46,2024-09-03,TRX-258,2024-11-01,1025000,Soto Ayam,Debit Card
+CUST-159,Iris Wijaya,iris.wijaya@mail.com,0827901234,Bandung,37,2024-09-16,TRX-259,2024-10-23,965000,Bakso,E-Wallet
+CUST-160,Jade Wijaya,jade.wijaya@mail.com,0827012345,Bekasi,52,2024-08-24,TRX-260,2024-10-08,1260000,Gado-gado,Cash
+CUST-160,Jade Wijaya,jade.wijaya@mail.com,0827012345,Bekasi,52,2024-08-24,TRX-261,2024-10-26,1265000,Martabak,Credit Card
+CUST-161,Kiera Wijaya,kiera.wijaya@mail.com,0828123456,Depok,25,2024-09-22,TRX-262,2024-10-28,810000,Lumpia,Debit Card
+CUST-162,Luna Wijaya,luna.wijaya@mail.com,0828234567,Bogor,40,2024-09-12,TRX-263,2024-10-19,985000,Tahu Goreng,E-Wallet
+CUST-162,Luna Wijaya,luna.wijaya@mail.com,0828234567,Bogor,40,2024-09-12,TRX-264,2024-11-06,990000,Perkedel,Cash
+CUST-163,Morgan Wijaya,morgan.wijaya@mail.com,0828345678,Jakarta Pusat,44,2024-09-10,TRX-265,2024-10-17,1005000,Mie Ayam,Credit Card
+CUST-164,Nina Wijaya,nina.wijaya@mail.com,0828456789,Jakarta Timur,28,2024-09-20,TRX-266,2024-10-24,825000,Nasi Goreng,Debit Card
+CUST-165,Oakley Wijaya,oakley.wijaya@mail.com,0828567890,Jakarta Barat,38,2024-09-18,TRX-267,2024-10-20,970000,Sate Ayam,E-Wallet
+CUST-165,Oakley Wijaya,oakley.wijaya@mail.com,0828567890,Jakarta Barat,38,2024-09-18,TRX-268,2024-11-07,975000,Bakso,Cash
+CUST-166,Parker Wijaya,parker.wijaya@mail.com,0828678901,Jakarta Selatan,47,2024-09-01,TRX-269,2024-10-12,1235000,Gado-gado,Credit Card
+CUST-167,Quinley Wijaya,quinley.wijaya@mail.com,0828789012,Tangerang,31,2024-09-19,TRX-270,2024-10-23,845000,Martabak,Debit Card
+CUST-167,Quinley Wijaya,quinley.wijaya@mail.com,0828789012,Tangerang,31,2024-09-19,TRX-271,2024-11-10,850000,Lumpia,E-Wallet
+CUST-168,Riley Wijaya,riley.wijaya@mail.com,0828890123,Bandung,51,2024-08-27,TRX-272,2024-10-10,1250000,Tahu Goreng,Cash
+CUST-169,Skylar Wijaya,skylar.wijaya@mail.com,0828901234,Bekasi,26,2024-09-24,TRX-273,2024-10-27,820000,Perkedel,Credit Card
+CUST-170,Taylor Wijaya,taylor.wijaya@mail.com,0828012345,Depok,35,2024-09-15,TRX-274,2024-10-21,855000,Mie Goreng,Debit Card
+CUST-170,Taylor Wijaya,taylor.wijaya@mail.com,0828012345,Depok,35,2024-09-15,TRX-275,2024-11-08,860000,Nasi Goreng,E-Wallet
+CUST-171,Unity Wijaya,unity.wijaya@mail.com,0829123456,Bogor,43,2024-09-11,TRX-276,2024-10-19,995000,Soto Ayam,Cash
+CUST-171,Unity Wijaya,unity.wijaya@mail.com,0829123456,Bogor,43,2024-09-11,TRX-277,2024-11-06,1000000,Bakso,Credit Card
+CUST-172,Violet Wijaya,violet.wijaya@mail.com,0829234567,Jakarta Pusat,30,2024-09-17,TRX-278,2024-10-22,840000,Gado-gado,Debit Card
+CUST-173,Whitney Wijaya,whitney.wijaya@mail.com,0829345678,Jakarta Timur,48,2024-08-29,TRX-279,2024-10-11,1240000,Martabak,E-Wallet
+CUST-173,Whitney Wijaya,whitney.wijaya@mail.com,0829345678,Jakarta Timur,48,2024-08-29,TRX-280,2024-10-29,1245000,Lumpia,Cash
+CUST-174,Xandra Wijaya,xandra.wijaya@mail.com,0829456789,Jakarta Barat,27,2024-09-23,TRX-281,2024-10-26,815000,Tahu Goreng,Credit Card
+CUST-175,Yarrow Wijaya,yarrow.wijaya@mail.com,0829567890,Jakarta Selatan,44,2024-09-06,TRX-282,2024-10-17,1005000,Perkedel,Debit Card
+CUST-175,Yarrow Wijaya,yarrow.wijaya@mail.com,0829567890,Jakarta Selatan,44,2024-09-06,TRX-283,2024-11-04,1010000,Mie Ayam,E-Wallet
+CUST-176,Zara Wijaya,zara.wijaya@mail.com,0829678901,Tangerang,39,2024-09-13,TRX-284,2024-10-20,975000,Nasi Goreng,Cash
+CUST-177,Ava Wijaya,ava.wijaya@mail.com,0829789012,Bandung,50,2024-08-28,TRX-285,2024-10-14,1250000,Sate Ayam,Credit Card
+CUST-177,Ava Wijaya,ava.wijaya@mail.com,0829789012,Bandung,50,2024-08-28,TRX-286,2024-11-01,1255000,Bakso,Debit Card
+CUST-178,Brooklyn Wijaya,brooklyn.wijaya@mail.com,0829890123,Bekasi,32,2024-09-21,TRX-287,2024-10-24,850000,Gado-gado,E-Wallet
+CUST-179,Cherub Wijaya,cherub.wijaya@mail.com,0829901234,Depok,41,2024-09-09,TRX-288,2024-10-18,985000,Martabak,Cash
+CUST-179,Cherub Wijaya,cherub.wijaya@mail.com,0829901234,Depok,41,2024-09-09,TRX-289,2024-11-05,990000,Lumpia,Credit Card
+CUST-180,Dakota Wijaya,dakota.wijaya@mail.com,0829012345,Bogor,29,2024-09-19,TRX-290,2024-10-23,830000,Tahu Goreng,Debit Card
+CUST-181,Elora Wijaya,elora.wijaya@mail.com,0830123456,Jakarta Pusat,45,2024-09-04,TRX-291,2024-10-15,1015000,Perkedel,E-Wallet
+CUST-181,Elora Wijaya,elora.wijaya@mail.com,0830123456,Jakarta Pusat,45,2024-09-04,TRX-292,2024-11-02,1020000,Mie Goreng,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-293,2024-10-26,815000,Nasi Goreng,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-294,2024-11-12,820000,Soto Ayam,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-295,2024-11-28,825000,Bakso,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-296,2024-12-10,830000,Gado-gado,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-297,2024-12-18,835000,Martabak,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-298,2024-12-22,840000,Lumpia,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-299,2024-12-25,845000,Tahu Goreng,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-300,2024-10-05,850000,Perkedel,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-301,2024-10-15,855000,Mie Ayam,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-302,2024-11-01,860000,Nasi Goreng,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-303,2024-11-20,865000,Sate Ayam,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-304,2024-12-05,870000,Bakso,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-305,2024-12-15,875000,Gado-gado,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-306,2024-12-20,880000,Martabak,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-307,2024-10-10,885000,Lumpia,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-308,2024-11-05,890000,Tahu Goreng,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-309,2024-12-01,895000,Perkedel,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-310,2024-12-12,900000,Mie Goreng,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-311,2024-10-20,905000,Nasi Goreng,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-312,2024-11-10,910000,Soto Ayam,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-313,2024-12-05,915000,Bakso,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-314,2024-12-18,920000,Gado-gado,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-315,2024-10-25,925000,Martabak,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-316,2024-11-15,930000,Lumpia,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-317,2024-12-10,935000,Tahu Goreng,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-318,2024-12-20,940000,Perkedel,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-319,2024-10-08,945000,Mie Ayam,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-320,2024-11-02,950000,Nasi Goreng,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-321,2024-12-01,955000,Sate Ayam,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-322,2024-12-15,960000,Bakso,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-323,2024-10-12,965000,Gado-gado,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-324,2024-11-08,970000,Martabak,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-325,2024-12-03,975000,Lumpia,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-326,2024-12-17,980000,Tahu Goreng,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-327,2024-10-18,985000,Perkedel,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-328,2024-11-12,990000,Mie Goreng,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-329,2024-12-06,995000,Nasi Goreng,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-330,2024-12-19,1000000,Soto Ayam,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-331,2024-10-22,1005000,Bakso,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-332,2024-11-18,1010000,Gado-gado,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-333,2024-12-08,1015000,Martabak,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-334,2024-12-22,1020000,Lumpia,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-335,2024-10-30,1025000,Tahu Goreng,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-336,2024-11-25,1030000,Perkedel,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-337,2024-12-10,1035000,Mie Ayam,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-338,2024-12-20,1040000,Nasi Goreng,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-339,2024-10-28,1045000,Sate Ayam,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-340,2024-12-15,1050000,Bakso,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-341,2024-10-01,850000,Gado-gado,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-342,2024-10-31,855000,Martabak,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-343,2024-11-30,860000,Lumpia,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-344,2024-12-30,865000,Tahu Goreng,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-345,2024-10-31,870000,Perkedel,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-346,2024-11-30,875000,Mie Goreng,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-347,2024-12-31,880000,Nasi Goreng,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-348,2024-10-02,885000,Soto Ayam,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-349,2024-11-02,890000,Bakso,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-350,2024-12-02,895000,Gado-gado,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-351,2024-10-03,900000,Martabak,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-352,2024-11-03,905000,Lumpia,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-353,2024-12-03,910000,Tahu Goreng,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-354,2024-10-04,915000,Perkedel,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-355,2024-11-04,920000,Mie Ayam,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-356,2024-12-04,925000,Nasi Goreng,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-357,2024-10-05,930000,Sate Ayam,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-358,2024-11-05,935000,Bakso,Debit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-359,2024-12-05,940000,Gado-gado,E-Wallet
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-360,2024-10-06,945000,Martabak,Cash
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-361,2024-11-06,950000,Lumpia,Credit Card
+CUST-182,Freya Wijaya,freya.wijaya@mail.com,0830234567,Jakarta Timur,26,2024-09-22,TRX-362,2024-12-06,955000,Tahu Goreng,Debit Card
