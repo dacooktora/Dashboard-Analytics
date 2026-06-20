@@ -1,41 +1,17 @@
-// Strategy Scoring System — VOTING PER CUSTOMER (PARTIAL MATCH)
-// Setiap customer dihitung skor ke semua strategi, lalu di-vote dengan bobot parsial
+// AI-Powered Strategy Selection + Explanation
+// Lapis 1: AI pilih 3 strategi dari 50 pool per segmen
+// Lapis 2: StrategyAccordion panggil /api/strategy-explanation buat penjelasan
 
-function hitungKondisi(customer: any, benchmark: any) {
-  const { avgTx, freq, recency, totalRevenue } = customer
-  const { avgTxGlobal, freqP25, freqP75 } = benchmark
+import { createGroq } from "@ai-sdk/groq"
+import { generateText } from "ai"
 
-  return {
-    avgTx_tinggi: avgTx > avgTxGlobal * 1.3,
-    avgTx_sedang: avgTx >= avgTxGlobal * 1.1 && avgTx <= avgTxGlobal * 1.3,
-    avgTx_rendah: avgTx < avgTxGlobal * 1.1,
-    avgTx_sangat_rendah: avgTx < avgTxGlobal * 0.5,
-    freq_tinggi: freq >= freqP75,
-    freq_sedang: freq > freqP25 && freq < freqP75,
-    freq_rendah: freq <= freqP25,
-    recency_baru: recency < 30,
-    recency_sedang: recency >= 30 && recency <= 60,
-    recency_lama: recency > 60,
-    totalRevenue_tinggi: totalRevenue > avgTxGlobal * 10,
-  }
-}
+const groq = createGroq({
+  apiKey: process.env.GROQ_API_KEY,
+})
 
-export function calculateBenchmark(segments: any[]) {
-  const allCustomers = segments.flatMap((seg) => seg.metricList || seg.customers || [])
-  if (allCustomers.length === 0) {
-    return { avgTxGlobal: 0, freqP25: 0, freqP75: 0 }
-  }
-
-  const avgTxValues = allCustomers.map((c: any) => c.monetary || 0)
-  const freqValues = allCustomers.map((c: any) => c.frequency || 0)
-
-  const avgTxGlobal = avgTxValues.reduce((a: number, b: number) => a + b, 0) / avgTxValues.length
-  const sortedFreq = [...freqValues].sort((a: number, b: number) => a - b)
-  const freqP25 = sortedFreq[Math.floor(sortedFreq.length * 0.25)] || 0
-  const freqP75 = sortedFreq[Math.floor(sortedFreq.length * 0.75)] || 0
-
-  return { avgTxGlobal, freqP25, freqP75 }
-}
+// ============================================================
+// STEP 1: STRATEGY POOLS (200 strategi, 50 per segmen)
+// ============================================================
 
 export const STRATEGY_POOLS: Record<string, any[]> = {
   "High Value": [
@@ -248,57 +224,101 @@ export const STRATEGY_POOLS: Record<string, any[]> = {
   ],
 }
 
-// MAIN FUNCTION — Voting Per Customer dengan PARTIAL MATCH
-export function getDynamicRecommendations(segment: any, allSegments: any[]) {
-  try {
-    const benchmark = calculateBenchmark(allSegments)
-    const pool = STRATEGY_POOLS[segment.name as keyof typeof STRATEGY_POOLS] || []
-    const customerList = segment.metricList || segment.customers || []
+// ============================================================
+// STEP 2: AI SELECTION — pilih 3 strategi dari 50 pool
+// ============================================================
 
-    if (!customerList || customerList.length === 0) {
-      console.log("[v1] No customer list found for segment:", segment.name)
-      return []
+export async function getAIRecommendations(segment: any, allSegments: any[]) {
+  try {
+    const pool = STRATEGY_POOLS[segment.name as keyof typeof STRATEGY_POOLS] || []
+    if (pool.length === 0) return []
+
+    // Build prompt buat AI pilih 3 strategi dari 50
+    const prompt = `
+Anda adalah konsultan bisnis UMKM yang ahli dalam strategi pemasaran berbasis data.
+
+Pilih 3 strategi yang PALING COCOK untuk segmen pelanggan "${segment.name}" dari daftar 50 strategi di bawah ini.
+
+DATA SEGMEN:
+- Nama Segmen: ${segment.name}
+- Jumlah Customer: ${segment.count}
+- Rata-rata Transaksi: Rp ${segment.avgValue.toLocaleString('id-ID')}
+- Total Revenue: Rp ${(segment.avgValue * segment.count).toLocaleString('id-ID')}
+- Persentase dari Total: ${segment.percentage}%
+
+KARAKTERISTIK SEGMEN:
+${segment.name === "High Value" ? "- Pelanggan dengan nilai transaksi tertinggi dan frekuensi pembelian tinggi. Mereka adalah aset paling berharga."
+: segment.name === "Medium Value" ? "- Pelanggan dengan nilai transaksi menengah, memiliki potensi untuk dinaikkan ke High Value."
+: segment.name === "Low Value" ? "- Pelanggan dengan nilai transaksi rendah dan jarang bertransaksi. Perlu re-engagement."
+: "- Pelanggan baru atau sangat jarang bertransaksi. Perlu edukasi dan pengenalan produk."}
+
+DAFTAR 50 STRATEGI (format: ID: NAMA STRATEGI):
+${pool.map((s: any) => `${s.id}: ${s.nama}`).join('\n')}
+
+Pilih 3 strategi yang PALING COCOK untuk segmen ini.
+Pertimbangkan:
+1. Karakteristik segmen (nilai transaksi, frekuensi, recency)
+2. Tujuan strategi (retensi, upselling, re-engagement, atau nurturing)
+3. Keunikan setiap strategi
+
+OUTPUT HANYA dalam format JSON:
+{
+  "selected": [
+    { "id": "HV-03", "reason": "alasan singkat kenapa cocok" },
+    { "id": "HV-07", "reason": "alasan singkat kenapa cocok" },
+    { "id": "HV-09", "reason": "alasan singkat kenapa cocok" }
+  ]
+}
+
+HANYA JSON, tanpa teks lain.
+`
+
+    const { text } = await generateText({
+      model: groq("llama-3.3-70b-versatile"),
+      prompt: prompt,
+      temperature: 0.5,
+      maxTokens: 800,
+    })
+
+    // Parse JSON
+    let parsed
+    try {
+      const jsonMatch = text.match(/\{[\s\S]*\}/)
+      if (jsonMatch) {
+        parsed = JSON.parse(jsonMatch[0])
+      } else {
+        parsed = JSON.parse(text)
+      }
+    } catch {
+      console.error("[v0] Failed to parse AI selection, using fallback")
+      return pool.slice(0, 3)
     }
 
-    const voteCount: Record<string, number> = {}
-    pool.forEach((s: any) => {
-      voteCount[s.id] = 0
-    })
+    const selected = parsed.selected || []
+    if (selected.length === 0) return pool.slice(0, 3)
 
-    customerList.forEach((c: any) => {
-      const customerData = {
-        avgTx: c.monetary || 0,
-        freq: c.frequency || 0,
-        recency: c.recency || 0,
-        totalRevenue: c.monetary || 0,
-      }
-
-      const kondisi = hitungKondisi(customerData, benchmark)
-
-      pool.forEach((s: any) => {
-        if (s.kondisi.length === 0) return
-        const match = s.kondisi.filter((k: string) => kondisi[k as keyof typeof kondisi]).length
-        // ✅ PARTIAL MATCH: tambah skor proporsional
-        if (match > 0) {
-          voteCount[s.id] += match / s.kondisi.length
-        }
+    // Ambil strategi berdasarkan ID yang dipilih AI
+    const recommendations = selected
+      .map((s: any) => {
+        const found = pool.find((p: any) => p.id === s.id)
+        return found ? { ...found, reason: s.reason || "Direkomendasikan oleh AI" } : null
       })
-    })
+      .filter(Boolean)
 
-    const ranked = pool
-      .map((s: any) => ({
-        ...s,
-        votes: voteCount[s.id] || 0,
-        skor: customerList.length > 0 ? (voteCount[s.id] || 0) / customerList.length : 0,
-      }))
-      .sort((a: any, b: any) => b.votes - a.votes || b.skor - a.skor)
-      .slice(0, 3)
-
-    console.log("[v1] Segment:", segment.name, "Top recommendations (voting):", ranked.map((r: any) => `${r.id} (${r.votes.toFixed(2)} votes)`))
-    return ranked
+    return recommendations.length >= 3 ? recommendations.slice(0, 3) : pool.slice(0, 3)
   } catch (error) {
-    console.error("[v1] Error calculating recommendations:", error)
+    console.error("[v0] AI Strategy Selection Error:", error)
     const pool = STRATEGY_POOLS[segment.name as keyof typeof STRATEGY_POOLS] || []
     return pool.slice(0, 3)
   }
+}
+
+// ============================================================
+// STEP 3: KOMPATIBILITAS dengan kode lama (segment-details.tsx)
+// ============================================================
+
+// Fungsi ini dipanggil dari segment-details.tsx
+// Karena async, panggil pake await di komponen
+export async function getDynamicRecommendations(segment: any, allSegments: any[]) {
+  return getAIRecommendations(segment, allSegments)
 }
