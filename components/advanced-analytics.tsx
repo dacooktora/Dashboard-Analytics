@@ -127,11 +127,11 @@ export function AdvancedAnalytics() {
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--popover))",
-                  border: "none",
-                  borderRadius: "12px",
-                  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-                }}
+  backgroundColor: "#ffffff",
+  border: "1px solid #e5e7eb",
+  borderRadius: "12px",
+  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+}}
               />
             </RadarChart>
           </ResponsiveContainer>
@@ -165,11 +165,11 @@ export function AdvancedAnalytics() {
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--popover))",
-                  border: "none",
-                  borderRadius: "12px",
-                  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-                }}
+  backgroundColor: "#ffffff",
+  border: "1px solid #e5e7eb",
+  borderRadius: "12px",
+  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+}}
               />
               <Bar dataKey="count" animationDuration={2000} barSize={40}>
                 {data.clvData.map((entry, index) => (
@@ -235,11 +235,11 @@ export function AdvancedAnalytics() {
 />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--popover))",
-                  border: "none",
-                  borderRadius: "12px",
-                  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-                }}
+  backgroundColor: "#ffffff",
+  border: "1px solid #e5e7eb",
+  borderRadius: "12px",
+  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+}}
               />
               <Legend verticalAlign="top" height={36} />
               <Line
@@ -305,11 +305,11 @@ export function AdvancedAnalytics() {
                   </Pie>
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "hsl(var(--popover))",
-                      border: "none",
-                      borderRadius: "12px",
-                      boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-                    }}
+  backgroundColor: "#ffffff",
+  border: "1px solid #e5e7eb",
+  borderRadius: "12px",
+  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+}}
                     formatter={(value: any, name: any, props: any) => [
                       `${formatCurrency(props.payload.revenue)} (${value}%)`,
                       name,
