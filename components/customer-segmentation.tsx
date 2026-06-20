@@ -50,6 +50,9 @@ const RenderZoomedDots = ({
   const yMin = Math.min(...yRange)
   const yMax = Math.max(...yRange)
 
+  // Ukuran titik: mengecil pas zoom tapi minimal 3px biar keliatan
+  const dotSize = Math.max(3, 6 / Math.sqrt(scale))
+
   return (
     <g>
       <defs>
@@ -72,11 +75,12 @@ const RenderZoomedDots = ({
               key={`dot-${idx}`}
               cx={zoomedCx}
               cy={zoomedCy}
-              r={6 / scale}
+              r={dotSize}
               fill={color}
               fillOpacity={0.9}
               stroke="#fff"
-              strokeWidth={2}
+              strokeWidth={1.5}
+              style={{ cursor: "pointer" }}
             />
           )
         })}
@@ -119,7 +123,6 @@ export function CustomerSegmentation() {
     return rect ? { x: rect.width / 2, y: rect.height / 2 } : { x: 0, y: 0 }
   }
 
-  // Domain dinamis dengan selisih 0.1 untuk X dan 10.000 untuk Y
   const getXDomain = () => {
     const range = 100 / scale
     const center = 50 - offsetX / scale
@@ -410,13 +413,14 @@ export function CustomerSegmentation() {
                   }}
                 />
 
+                {/* Scatter dengan opacity 0.1 biar tooltip tetap bisa nangkep */}
                 {segmentList.map((segmentName) => (
                   <Scatter
                     key={segmentName}
                     name={segmentName}
                     data={data.clusterData.filter((d) => d.segment === segmentName)}
                     fill="transparent"
-                    opacity={0}
+                    opacity={0.1}
                   >
                     {data.clusterData
                       .filter((d) => d.segment === segmentName)
