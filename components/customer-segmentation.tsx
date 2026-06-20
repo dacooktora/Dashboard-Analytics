@@ -122,6 +122,33 @@ export function CustomerSegmentation() {
   const [offsetY, setOffsetY] = useState(0)
   const lastPinchDist = useRef<number | null>(null)
   const chartAreaRef = useRef<HTMLDivElement>(null)
+  // Sumber kebenaran transform yang sinkron (state React bisa lag 1 event saat gesture cepat)
+  const transformRef = useRef({ scale: 1, offsetX: 0, offsetY: 0 })
+
+  const MIN_SCALE = 0.5
+  const MAX_SCALE = 5
+
+  // Zoom dengan "anchor": titik (anchorX, anchorY) di layar tetap diam di tempatnya,
+  // konten di sekitarnya yang membesar/mengecil mengelilingi titik itu.
+  const applyZoom = useCallback((rawScale: number, anchorX: number, anchorY: number) => {
+    const newScale = Math.min(Math.max(rawScale, MIN_SCALE), MAX_SCALE)
+    const { scale: oldScale, offsetX: oldOffsetX, offsetY: oldOffsetY } = transformRef.current
+    if (newScale === oldScale) return
+
+    const ratio = newScale / oldScale
+    const newOffsetX = anchorX - (anchorX - oldOffsetX) * ratio
+    const newOffsetY = anchorY - (anchorY - oldOffsetY) * ratio
+
+    transformRef.current = { scale: newScale, offsetX: newOffsetX, offsetY: newOffsetY }
+    setScale(newScale)
+    setOffsetX(newOffsetX)
+    setOffsetY(newOffsetY)
+  }, [])
+
+  const getContainerCenter = () => {
+    const rect = chartAreaRef.current?.getBoundingClientRect()
+    return rect ? { x: rect.width / 2, y: rect.height / 2 } : { x: 0, y: 0 }
+  }
 
   useEffect(() => {
     setIsClient(true)
@@ -137,40 +164,59 @@ export function CustomerSegmentation() {
   }, [])
 
   const handleZoomIn = () => {
-    setScale((s) => Math.min(s + 0.3, 5))
+    const { x, y } = getContainerCenter()
+    applyZoom(transformRef.current.scale + 0.3, x, y)
   }
 
   const handleZoomOut = () => {
-    setScale((s) => Math.max(s - 0.3, 0.5))
+    const { x, y } = getContainerCenter()
+    applyZoom(transformRef.current.scale - 0.3, x, y)
   }
 
   const handleReset = () => {
+    transformRef.current = { scale: 1, offsetX: 0, offsetY: 0 }
     setScale(1)
     setOffsetX(0)
     setOffsetY(0)
   }
 
-  // Pinch to zoom handler
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length === 2) {
-      e.preventDefault()
-      const touch1 = e.touches[0]
-      const touch2 = e.touches[1]
-      const dist = Math.sqrt(
-        Math.pow(touch2.clientX - touch1.clientX, 2) +
-          Math.pow(touch2.clientY - touch1.clientY, 2)
-      )
+  const getTouchDist = (t1: React.Touch, t2: React.Touch) =>
+    Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY)
 
-      if (lastPinchDist.current !== null) {
-        const delta = dist - lastPinchDist.current
-        setScale((s) => Math.min(Math.max(s + delta * 0.01, 0.5), 5))
-      }
-      lastPinchDist.current = dist
+  // Mulai gesture pinch baru: catat jarak awal 2 jari
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      lastPinchDist.current = getTouchDist(e.touches[0], e.touches[1])
     }
   }, [])
 
-  const handleTouchEnd = useCallback(() => {
-    lastPinchDist.current = null
+  // Pinch to zoom handler — anchor di titik tengah 2 jari (relatif ke area chart),
+  // jadi area yang dipencet tetap diam, bukan ketarik ke pojok
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      if (e.touches.length === 2 && chartAreaRef.current) {
+        e.preventDefault()
+        const touch1 = e.touches[0]
+        const touch2 = e.touches[1]
+        const dist = getTouchDist(touch1, touch2)
+        const rect = chartAreaRef.current.getBoundingClientRect()
+        const midX = (touch1.clientX + touch2.clientX) / 2 - rect.left
+        const midY = (touch1.clientY + touch2.clientY) / 2 - rect.top
+
+        if (lastPinchDist.current) {
+          const ratio = dist / lastPinchDist.current
+          applyZoom(transformRef.current.scale * ratio, midX, midY)
+        }
+        lastPinchDist.current = dist
+      }
+    },
+    [applyZoom]
+  )
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length < 2) {
+      lastPinchDist.current = null
+    }
   }, [])
 
   if (!data) {
@@ -264,7 +310,13 @@ export function CustomerSegmentation() {
           {/* Chart */}
           <div
             ref={chartAreaRef}
-            style={{ width: "100%", height: containerHeight }}
+            style={{
+              width: "100%",
+              height: containerHeight,
+              touchAction: "pan-y",
+              overflow: "hidden",
+            }}
+            onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
