@@ -25,7 +25,7 @@ const COLORS = {
 }
 
 const RenderClusterEnclosures = ({ segments, data, xAxis, yAxis }: any) => {
-  if (!xAxis  !yAxis  !data  !xAxis.scale  !yAxis.scale) return null
+  if (!xAxis || !yAxis || !data || !xAxis.scale || !yAxis.scale) return null
 
   return (
     <g>
