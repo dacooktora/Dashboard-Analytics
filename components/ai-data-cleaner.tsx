@@ -35,32 +35,37 @@ export function AIDataCleaner() {
   }
 
   const startCleaning = async () => {
-    if (!file) return
+  if (!file) return
 
-    setStatus("processing")
-    setProgress(10)
+  setStatus("processing")
+  setProgress(10)
 
-    try {
-      const content = await file.text()
+  try {
+    const content = await file.text()
 
-      const response = await fetch("/api/clean-data", {
-        method: "POST",
-        body: JSON.stringify({ content, filename: file.name }),
-        headers: { "Content-Type": "application/json" },
-      })
+    const response = await fetch("/api/clean-data", {
+      method: "POST",
+      body: JSON.stringify({ content, filename: file.name }),
+      headers: { "Content-Type": "application/json" },
+    })
 
-      if (!response.ok) throw new Error("Cleaning failed")
+    if (!response.ok) throw new Error("Cleaning failed")
 
-      const result = await response.json()
-      setCleanedData(result.cleanedData)
-      setStatus("success")
-      setProgress(100)
+    const result = await response.json()
+    setCleanedData(result.cleanedData)
+    setStatus("success")
+    setProgress(100)
+
+    if (result.wasAlreadyClean) {
+      toast.success("Format data sudah sesuai, tidak ada yang perlu diubah!")
+    } else {
       toast.success("Data berhasil dibersihkan oleh AI!")
-    } catch (error) {
-      console.error("[v0] Cleaning error:", error)
-      setStatus("error")
-      toast.error("Gagal membersihkan data. Silakan coba lagi.")
     }
+  } catch (error) {
+    console.error("[v0] Cleaning error:", error)
+    setStatus("error")
+    toast.error("Gagal membersihkan data. Silakan coba lagi.")
+  }
   }
 
   const applyToDashboard = () => {
