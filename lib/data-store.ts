@@ -65,7 +65,8 @@ export interface ProcessedData {
 class DataStore {
   private listeners: Set<() => void> = new Set()
   private data: ProcessedData | null = null
-  private timeRange = "30d"
+  // Default to "all" so newly applied data is never silently hidden by a date filter
+  private timeRange = "all"
 
   subscribe(listener: () => void) {
     this.listeners.add(listener)
@@ -88,7 +89,13 @@ class DataStore {
   getFilteredData(): ProcessedData | null {
     if (!this.data) return null
 
-    const now = new Date("2025-10-04") // Current date as specified by user
+    // "all" (default) — no date filtering, return everything that was uploaded
+    if (this.timeRange === "all") {
+      return this.data
+    }
+
+    // Use the real current date instead of a hardcoded one
+    const now = new Date()
     let daysToFilter = 30
 
     switch (this.timeRange) {
