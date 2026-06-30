@@ -45,19 +45,40 @@ export function SegmentDetails() {
   const [loadingRecs, setLoadingRecs] = useState<Record<string, boolean>>({})
 
   // Fetch rekomendasi dari AI tiap kali data berubah
+  // PENTING: dijalankan SEQUENTIAL (satu per satu), bukan parallel,
+  // supaya tidak langsung kirim 4 request bersamaan ke Groq API dan kena rate limit
   useEffect(() => {
-    if (data) {
-      data.segments.forEach(async (segment) => {
-        setLoadingRecs(prev => ({ ...prev, [segment.name]: true }))
+    if (!data) return
+
+    let cancelled = false
+
+    const fetchAllSequentially = async () => {
+      for (const segment of data.segments) {
+        if (cancelled) return
+        setLoadingRecs((prev) => ({ ...prev, [segment.name]: true }))
         try {
           const recs = await getDynamicRecommendations(segment, data.segments)
-          setRecommendationsMap(prev => ({ ...prev, [segment.name]: recs }))
+          if (!cancelled) {
+            setRecommendationsMap((prev) => ({ ...prev, [segment.name]: recs }))
+          }
         } catch (error) {
           console.error("Error fetching recommendations for", segment.name, error)
         } finally {
-          setLoadingRecs(prev => ({ ...prev, [segment.name]: false }))
+          if (!cancelled) {
+            setLoadingRecs((prev) => ({ ...prev, [segment.name]: false }))
+          }
         }
-      })
+        // Jeda kecil antar request biar tidak burst ke Groq API
+        if (!cancelled) {
+          await new Promise((resolve) => setTimeout(resolve, 600))
+        }
+      }
+    }
+
+    fetchAllSequentially()
+
+    return () => {
+      cancelled = true
     }
   }, [data])
 
