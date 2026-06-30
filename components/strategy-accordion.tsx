@@ -30,6 +30,7 @@ interface StrategyItem {
   nama: string
   skor?: number
   match?: number
+  reason?: string
 }
 
 interface StrategyAccordionProps {
@@ -117,8 +118,13 @@ export function StrategyAccordion({
         return (
           <AccordionItem key={key} value={key}>
             <AccordionTrigger onClick={() => fetchExplanation(rec)} className="text-sm">
-              <span className="flex-1">
+              <span className="flex-1 text-left">
                 {rec.nama}
+                {rec.reason && (
+                  <span className="block text-xs text-primary/80 mt-1 italic">
+                    💡 Dipilih AI karena: {rec.reason}
+                  </span>
+                )}
                 {showMeta && typeof rec.skor === "number" && (
                   <span className="block text-xs text-muted-foreground mt-1">
                     Relevansi: {(rec.skor * 100).toFixed(0)}%{typeof rec.match === "number" ? ` · ${rec.match} kondisi cocok` : ""}
@@ -127,6 +133,9 @@ export function StrategyAccordion({
               </span>
             </AccordionTrigger>
             <AccordionContent className="text-sm text-muted-foreground">
+              <p className="text-xs mb-2 text-muted-foreground/80">
+                Berikut cara praktis menerapkan strategi ini ke bisnis Anda:
+              </p>
               {isLoading && (
                 <div className="flex items-center gap-2">
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
