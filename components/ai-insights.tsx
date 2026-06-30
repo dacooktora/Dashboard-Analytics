@@ -27,9 +27,9 @@ export function AIInsights() {
       .join("\n")
 
     const topCategories = (processedData.categoryData || [])
-      .slice(0, 5)
-      .map((c: any) => `- ${c.category}: ${c.count} transaksi, revenue Rp ${c.revenue?.toLocaleString("id-ID")}`)
-      .join("\n")
+  .slice(0, 5)
+  .map((c: any) => `- ${c.name}: ${c.value}% dari total revenue, revenue Rp ${c.revenue?.toLocaleString("id-ID")}`)
+  .join("\n")
 
     return `
 DATA UMKM DIGITAL:
