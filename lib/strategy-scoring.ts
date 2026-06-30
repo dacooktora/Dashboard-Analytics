@@ -318,12 +318,15 @@ OUTPUT HANYA JSON (tanpa penjelasan apapun di luar JSON):
       const jsonMatch = text.match(/\{[\s\S]*\}/)
       parsed = JSON.parse(jsonMatch ? jsonMatch[0] : text)
     } catch (e) {
-      console.error("[v1] Failed to parse AI selection")
-      return getRandomDiverse(pool) // fallback
+      console.error("[v1] Failed to parse AI selection. Raw text:", text)
+      return getRandomDiverse(pool, "Gagal parsing respons AI")
     }
 
     const selected = parsed.selected || []
-    if (selected.length < 3) return getRandomDiverse(pool)
+    if (selected.length < 3) {
+      console.error("[v1] AI returned less than 3 selections:", selected.length)
+      return getRandomDiverse(pool, `AI hanya mengembalikan ${selected.length} strategi`)
+    }
 
     const recommendations = selected
       .map((s: any) => {
@@ -332,19 +335,29 @@ OUTPUT HANYA JSON (tanpa penjelasan apapun di luar JSON):
       })
       .filter(Boolean)
 
-    return recommendations.length >= 3 ? recommendations.slice(0, 3) : getRandomDiverse(pool)
+    return recommendations.length >= 3
+      ? recommendations.slice(0, 3)
+      : getRandomDiverse(pool, "Hasil mapping ID strategi tidak lengkap")
 
-  } catch (error) {
-    console.error("[v1] AI Strategy Selection Error:", error)
-    return getRandomDiverse(STRATEGY_POOLS[segment.name as keyof typeof STRATEGY_POOLS] || [])
+  } catch (error: any) {
+    console.error("[v1] AI Strategy Selection Error:", error?.message || error)
+    return getRandomDiverse(
+      STRATEGY_POOLS[segment.name as keyof typeof STRATEGY_POOLS] || [],
+      error?.message?.includes("rate") || error?.status === 429
+        ? "Groq API rate limit tercapai, coba lagi dalam beberapa saat"
+        : `Error: ${error?.message || "tidak diketahui"}`
+    )
   }
 }
 
 // Fallback: Pilih 3 strategi secara random tapi beragam
-function getRandomDiverse(pool: any[]) {
+function getRandomDiverse(pool: any[], errorReason?: string) {
   if (pool.length < 3) return pool
   const shuffled = [...pool].sort(() => 0.5 - Math.random())
-  return shuffled.slice(0, 3).map(s => ({ ...s, reason: "Rekomendasi diversifikasi (fallback)" }))
+  const fallbackReason = errorReason
+    ? `Fallback (AI gagal: ${errorReason})`
+    : "Rekomendasi diversifikasi (fallback)"
+  return shuffled.slice(0, 3).map(s => ({ ...s, reason: fallbackReason }))
 }
 
 // ============================================================
