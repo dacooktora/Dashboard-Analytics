@@ -279,7 +279,7 @@ Pilih **3 strategi yang BERBEDA secara signifikan** dari pool berikut yang PALIN
 === DATA AKTUAL SEGMEN: ${segment.name} ===
 - Jumlah Customer: ${segment.count} orang
 - Avg. Transaksi: Rp ${Math.round(segment.avgValue).toLocaleString("id-ID")} → level ${txLevel}
-- Total Revenue: Rp \( {Math.round(segRevenue).toLocaleString("id-ID")} ( \){revenueShare}% dari total)
+- Total Revenue: Rp ${Math.round(segRevenue).toLocaleString("id-ID")} (${revenueShare}% dari total)
 - Rata-rata Frekuensi: ${avgFreq}x → ${freqLevel}
 - Rata-rata Recency: ${avgRecency} hari → ${recencyLevel}
 
