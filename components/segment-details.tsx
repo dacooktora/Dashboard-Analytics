@@ -25,7 +25,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useDataStore } from "@/hooks/use-data-store"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { getDynamicRecommendations } from "@/lib/strategy-scoring"
 import { StrategyAccordion } from "@/components/strategy-accordion"
 
 type SortField = "transaction_amount" | "transaction_date" | "frequency" | "customer_name"
@@ -46,7 +45,8 @@ export function SegmentDetails() {
 
   // Fetch rekomendasi dari AI tiap kali data berubah
   // PENTING: dijalankan SEQUENTIAL (satu per satu), bukan parallel,
-  // supaya tidak langsung kirim 4 request bersamaan ke Groq API dan kena rate limit
+  // dan via API route /api/strategy-recommendations (server-side),
+  // supaya GROQ_API_KEY tidak perlu diakses dari browser/client component
   useEffect(() => {
     if (!data) return
 
@@ -57,9 +57,20 @@ export function SegmentDetails() {
         if (cancelled) return
         setLoadingRecs((prev) => ({ ...prev, [segment.name]: true }))
         try {
-          const recs = await getDynamicRecommendations(segment, data.segments)
+          const res = await fetch("/api/strategy-recommendations", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ segment, allSegments: data.segments }),
+          })
+
+          if (!res.ok) {
+            const errData = await res.json().catch(() => ({}))
+            throw new Error(errData.error || `HTTP ${res.status}`)
+          }
+
+          const { recommendations } = await res.json()
           if (!cancelled) {
-            setRecommendationsMap((prev) => ({ ...prev, [segment.name]: recs }))
+            setRecommendationsMap((prev) => ({ ...prev, [segment.name]: recommendations }))
           }
         } catch (error) {
           console.error("Error fetching recommendations for", segment.name, error)
