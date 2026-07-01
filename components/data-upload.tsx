@@ -81,7 +81,7 @@ CUST002,Siti Nurhaliza,siti@email.com,081234567891,2024-02-15,280000,Beauty,E-Wa
             <h3 className="font-semibold">Upload Data Customer</h3>
           </div>
           <p className="text-sm text-muted-foreground">
-            Upload file CSV atau Excel dengan data transaksi customer untuk analisis K-Means clustering
+            Upload file CSV atau Excel dengan data transaksi customer untuk di analisis
           </p>
 
           <div className="mt-3 space-y-2">
