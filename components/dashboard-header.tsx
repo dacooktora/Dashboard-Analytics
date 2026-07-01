@@ -18,13 +18,7 @@ export function DashboardHeader() {
             <p className="text-sm text-muted-foreground mt-1">Segmentasi Pelanggan Berbasis Data untuk Strategi Pemasaran yang Lebih Tepat</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <Select value={timeRange} onValueChange={handleTimeRangeChange}>
-              <SelectTrigger className="w-[140px]">
-                <SelectValue />
-              </SelectTrigger>
-            </Select>
-          </div>
+        
         </div>
       </div>
     </header>
