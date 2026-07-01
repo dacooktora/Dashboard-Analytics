@@ -102,10 +102,10 @@ export function AIDataCleaner() {
       <CardHeader>
         <div className="flex items-center gap-2">
           <Sparkles className="h-5 w-5 text-primary" />
-          <CardTitle>AI Data Cleaner</CardTitle>
+          <CardTitle>Data Cleaner</CardTitle>
         </div>
         <CardDescription>
-          Unggah data mentah Anda, dan AI kami akan menyesuaikan formatnya agar sesuai dengan dashboard analitik.
+           Unggah data mentah anda yang belum sesuai standar sistem, fitur ini akan melakukan penyesuaian format secara otomatis agar data siap diproses dan dianalisis oleh dashboard.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -148,7 +148,7 @@ export function AIDataCleaner() {
             {status === "processing" && (
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span>AI sedang menganalisis dan memperbaiki format...</span>
+                  <span>Sistem sedang menganalisis dan memperbaiki format...</span>
                   <span>{progress}%</span>
                 </div>
                 <Progress value={progress} className="h-2" />
