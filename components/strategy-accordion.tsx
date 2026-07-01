@@ -122,7 +122,7 @@ export function StrategyAccordion({
                 {rec.nama}
                 {rec.reason && (
                   <span className="block text-xs text-primary/80 mt-1 italic">
-                    💡 Dipilih AI karena: {rec.reason}
+                    💡 Dipilih karena: {rec.reason}
                   </span>
                 )}
                 {showMeta && typeof rec.skor === "number" && (
